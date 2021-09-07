@@ -47,6 +47,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnAttack(CallbackContext context)
+    {
+    }
+    public void OnDash(CallbackContext context)
+    {
+    }
+    public void OnSpecial(CallbackContext context)
+    {
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
