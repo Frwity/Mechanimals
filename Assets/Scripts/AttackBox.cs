@@ -13,12 +13,9 @@ public class AttackBox : MonoBehaviour
     BoxCollider2D boxCollider;
     SpriteRenderer sp;
 
-    bool hasHit = true;
-
     bool hasAttack = false;
 
     int comboCounter = 0;
-
     int attackCounter = 0;
 
     private void Start()
@@ -29,34 +26,33 @@ public class AttackBox : MonoBehaviour
 
     private void Update()
     {
-        if(gameObject.activeSelf)
+        if(hasAttack)
         {
             attackTimer += Time.deltaTime;
-            if(attackTimer >= attackWindow)
+            if (attackTimer >= attackWindow)
             {
                 FinishAttack();
             }
-        }
 
-        //Combo
-        if(hasAttack)
-        {
+            //Combo
             comboTimer += Time.deltaTime;
             if(comboTimer >= ComboUptime || comboCounter == maxCombo)
             {
                 comboCounter = 0;
                 hasAttack = false;
                 comboTimer = 0.0f;
+                attackCounter = 0;
             }
         }
     }
 
-    public void Attack() 
+    public void Attack()
     {
         hasAttack = true;
         boxCollider.enabled = true;
         sp.enabled = true;
         attackTimer = 0.0f;
+        Mathf.Clamp(attackCounter, attackCounter++, maxCombo);
     }
 
     public void FinishAttack()
@@ -72,7 +68,6 @@ public class AttackBox : MonoBehaviour
             Enemy en = collision.gameObject.GetComponent<Enemy>();
             en.takeDamage(1, comboCounter);
             comboCounter++;
-            Debug.Log("Combo : " + comboCounter);
         };
     }
 }

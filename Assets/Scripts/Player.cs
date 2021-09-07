@@ -17,8 +17,13 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce = 100f;
 
     //Combat
-    [SerializeField] AttackBox attackBox;
     [SerializeField] float attackCooldown = 1.0f;
+    [SerializeField] Transform attackBoxPosition;
+    [SerializeField] Vector2 attackBoxSize;
+    [SerializeField] LayerMask damageable;
+    [SerializeField] int damage = 1;
+    [SerializeField] int maxCombo = 3;
+
     float attackTimer = 0.0f;
 
     bool hasAttack = false;
@@ -29,6 +34,8 @@ public class Player : MonoBehaviour
     bool isMoving = false;
     bool isSpecial = false;
     public bool isFlipped = false;
+
+    int comboCounter = 0;
 
     public void Awake()
     {
@@ -64,7 +71,8 @@ public class Player : MonoBehaviour
                 isFlipped = false;
             }
 
-            transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBody.GetSpeed(), 0f, 0f);
+            if (!hasAttack)
+                transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBody.GetSpeed(), 0f, 0f);
         }
         if (isSpecial)
             isSpecial = lowBody.PerformSpecialAttack(this);
@@ -89,11 +97,16 @@ public class Player : MonoBehaviour
 
     public void OnAttack(CallbackContext context)
     {
-        if(context.performed && !hasAttack)
+        if(context.performed)
         {
             //TODO mid air combat specific
             hasAttack = true;
-            attackBox.Attack();
+            if(comboCounter < maxCombo)
+                comboCounter++;
+            //TODO trigger right animation combo
+            //TODO reset combo counter when last animation combo is finish
+
+            CheckAttackCollision();
         }
     }
 
@@ -126,5 +139,23 @@ public class Player : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBody.GetUpperSprite();
         lowBody = animals[Random.Range(0, 3)].GetComponent<AnimalChara>();
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBody.GetLowSprite();
+    }
+
+    private void CheckAttackCollision()
+    {
+        Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
+
+        foreach(Collider2D enemy in collideEnemies)
+        {
+            Enemy en = enemy.gameObject.GetComponent<Enemy>();
+            
+            if (en)
+                en.takeDamage(damage, comboCounter);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
     }
 }
