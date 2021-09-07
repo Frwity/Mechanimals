@@ -6,28 +6,50 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Player : MonoBehaviour
 {
+    // USP
+   
+    [SerializeField] GameObject[] animals;
+
+    AnimalChara upperBody;
+    AnimalChara lowBody;
+
     // Movement
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     [SerializeField] float jumpForce = 100f;
-    [SerializeField] float speed = 3f;
     Vector2 moveInput;
     float jump = 1f;
-    bool isGrounded = true;
+    public bool isGrounded = true;
     bool isMoving = false;
+    bool isSpecial = false;
+    public bool isFlipped = false;
 
-    private void Awake()
+    public void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        //gameObject.GetComponent<PlayerInput>().devices.
+
+        RandomChangeBody();
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
-        if (isMoving)
+        if (isMoving && !isSpecial)
         {
-            transform.Translate((moveInput.x < 0f ? Mathf.Floor(moveInput.x) : Mathf.Ceil(moveInput.x)) * Time.deltaTime * speed, 0f, 0f);
+            if (moveInput.x <= 0f)
+            {
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                isFlipped = true;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                isFlipped = false;
+            }
+
+            transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBody.GetSpeed(), 0f, 0f);
         }
+        if (isSpecial)
+            isSpecial = lowBody.PerformSpecialAttack(this);
     }
 
     public void OnMovement(CallbackContext context)
@@ -38,7 +60,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(CallbackContext context)
     {
-        if (context.performed && isGrounded)
+        if (context.started && isGrounded)
         {
             jump = context.ReadValue<float>();
             rb.velocity = new Vector2(rb.velocity.x, jump * jumpForce);
@@ -50,16 +72,35 @@ public class Player : MonoBehaviour
     public void OnAttack(CallbackContext context)
     {
     }
-    public void OnDash(CallbackContext context)
+
+    public void OnDebug(CallbackContext context)
     {
-    }
-    public void OnSpecial(CallbackContext context)
-    {
+        if (context.started)
+        {
+            RandomChangeBody();
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnSpecial(CallbackContext context)
+    {
+        if (!isSpecial && context.started)
+        {
+            isSpecial = true;
+            lowBody.InitiateSpecialAttack(this);
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
             isGrounded = true;
+    }
+
+    private void RandomChangeBody()
+    {
+        upperBody = animals[Random.Range(0, 2)].GetComponent<AnimalChara>();
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBody.GetUpperSprite();
+        lowBody = animals[Random.Range(0, 2)].GetComponent<AnimalChara>();
+        transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBody.GetLowSprite();
     }
 }
