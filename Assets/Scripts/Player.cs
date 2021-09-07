@@ -33,11 +33,12 @@ public class Player : MonoBehaviour
     public void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        RandomChangeBody();
     }
 
-    private void Update()
+    public void Update()
     {
-        if(hasAttack)
+        if (hasAttack)
         {
             attackTimer += Time.deltaTime;
             if(attackTimer >= attackCooldown)
@@ -121,9 +122,9 @@ public class Player : MonoBehaviour
 
     private void RandomChangeBody()
     {
-        upperBody = animals[Random.Range(0, 2)].GetComponent<AnimalChara>();
+        upperBody = animals[Random.Range(0, 3)].GetComponent<AnimalChara>();
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBody.GetUpperSprite();
-        lowBody = animals[Random.Range(0, 2)].GetComponent<AnimalChara>();
+        lowBody = animals[Random.Range(0, 3)].GetComponent<AnimalChara>();
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBody.GetLowSprite();
     }
 }
