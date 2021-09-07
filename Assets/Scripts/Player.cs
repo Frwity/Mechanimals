@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -17,6 +15,14 @@ public class Player : MonoBehaviour
 
     public Rigidbody2D rb;
     [SerializeField] float jumpForce = 100f;
+
+    //Combat
+    [SerializeField] AttackBox attackBox;
+    [SerializeField] float attackCooldown = 1.0f;
+    float attackTimer = 0.0f;
+
+    bool hasAttack = false;
+
     Vector2 moveInput;
     float jump = 1f;
     public bool isGrounded = true;
@@ -27,8 +33,19 @@ public class Player : MonoBehaviour
     public void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
 
-        RandomChangeBody();
+    private void Update()
+    {
+        if(hasAttack)
+        {
+            attackTimer += Time.deltaTime;
+            if(attackTimer >= attackCooldown)
+            {
+                hasAttack = false;
+                attackTimer = 0.0f;
+            }    
+        }
     }
 
     public void FixedUpdate()
@@ -71,6 +88,12 @@ public class Player : MonoBehaviour
 
     public void OnAttack(CallbackContext context)
     {
+        if(context.performed && !hasAttack)
+        {
+            //TODO mid air combat specific
+            hasAttack = true;
+            attackBox.Attack();
+        }
     }
 
     public void OnDebug(CallbackContext context)
