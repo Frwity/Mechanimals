@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
     {
         if(context.performed && !hasAttack)
         {
+            //TODO mid air combat specific
             hasAttack = true;
             attackBox.Attack();
         }

@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class AttackBox : MonoBehaviour
 {
-
     [SerializeField] float attackWindow = 0.5f;
     float attackTimer = 0.0f;
 
     [SerializeField] float ComboUptime = 2.0f;
     float comboTimer = 0.0f;
+
+    [SerializeField] int maxCombo = 3;
 
     BoxCollider2D boxCollider;
     SpriteRenderer sp;
@@ -17,6 +18,8 @@ public class AttackBox : MonoBehaviour
     bool hasAttack = false;
 
     int comboCounter = 0;
+
+    int attackCounter = 0;
 
     private void Start()
     {
@@ -39,7 +42,7 @@ public class AttackBox : MonoBehaviour
         if(hasAttack)
         {
             comboTimer += Time.deltaTime;
-            if(comboTimer >= ComboUptime || comboCounter == 3)
+            if(comboTimer >= ComboUptime || comboCounter == maxCombo)
             {
                 comboCounter = 0;
                 hasAttack = false;
@@ -48,7 +51,7 @@ public class AttackBox : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Attack() 
     {
         hasAttack = true;
         boxCollider.enabled = true;
@@ -60,7 +63,6 @@ public class AttackBox : MonoBehaviour
     {
         boxCollider.enabled = false;
         sp.enabled = false;
-        hasAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,7 +70,7 @@ public class AttackBox : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Enemy en = collision.gameObject.GetComponent<Enemy>();
-            en.takeDamage(1);
+            en.takeDamage(1, comboCounter);
             comboCounter++;
             Debug.Log("Combo : " + comboCounter);
         };

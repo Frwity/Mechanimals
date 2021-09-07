@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damage, int comboNum)
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);
