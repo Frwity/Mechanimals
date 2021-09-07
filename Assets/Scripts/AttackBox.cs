@@ -13,21 +13,17 @@ public class AttackBox : MonoBehaviour
     BoxCollider2D boxCollider;
     SpriteRenderer sp;
 
-    bool hasHit = true;
-
     bool hasAttack = false;
 
     int comboCounter = 0;
 
-    int attackCounter = 0;
-
-    private void Start()
+    public void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         sp = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    public void Update()
     {
         if(gameObject.activeSelf)
         {
@@ -65,14 +61,19 @@ public class AttackBox : MonoBehaviour
         sp.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" && transform.parent.tag == "Player")
         {
-            Enemy en = collision.gameObject.GetComponent<Enemy>();
-            en.takeDamage(1, comboCounter);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(1, comboCounter);
             comboCounter++;
             Debug.Log("Combo : " + comboCounter);
-        };
+        }
+
+        if (collision.gameObject.tag == "Player" && transform.parent.tag == "Enemy")
+        {
+            comboCounter++;
+            collision.gameObject.GetComponent<Player>().TakeDamage(1);
+        }
     }
 }
