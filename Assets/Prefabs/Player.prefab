@@ -218,9 +218,8 @@ MonoBehaviour:
   jumpForce: 27
   isGrounded: 1
   isFlipped: 0
-  attackCooldown: 1
   attackBoxPosition: {fileID: 6843287244993332511}
-  attackBoxSize: {x: 0, y: 0}
+  attackBoxSize: {x: 0, y: 2}
   damageable:
     serializedVersion: 2
     m_Bits: 128

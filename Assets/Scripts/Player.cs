@@ -23,10 +23,7 @@ public class Player : MonoBehaviour
     bool isSpecial = false;
     [HideInInspector] public bool isFlipped = false;
 
-    // Combat
-
     //Combat
-    [SerializeField] float attackCooldown = 1.0f;
     [SerializeField] Transform attackBoxPosition;
     [SerializeField] Vector2 attackBoxSize;
     [SerializeField] LayerMask damageable;
@@ -57,9 +54,7 @@ public class Player : MonoBehaviour
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
-        //static value ?
-        attackBoxSize.y = 2;
-        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 2 )/ 2, 0.0f, 0.0f));
+        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
     }
 
     public void Update()
@@ -205,14 +200,14 @@ public class Player : MonoBehaviour
                 //Knock back enemy
                 if (comboCounter == 3)
                     en.GetComponent<Rigidbody2D>().velocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
+                else
+                    en.GetComponent<Rigidbody2D>().velocity = (attackBoxPosition.position - en.transform.position) * 2;
             }
         }
     }
 
     public void EndAttack()
     {
-        Debug.Log(anim.GetInteger("numCombo"));
-
         if (anim.GetInteger("numCombo") == 3)
             comboCounter = 0;
 
@@ -228,7 +223,6 @@ public class Player : MonoBehaviour
 
         //reset combo when hit
         comboCounter = 0;
-        anim.SetInteger("numCombo", 0);
         
         if (life == 0)
             isAlive = false;
