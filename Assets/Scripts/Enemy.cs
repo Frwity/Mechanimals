@@ -4,13 +4,12 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public WorldManager worldMananger;
     [HideInInspector] public Arena arena = null;
-    [SerializeField] int life = 10;
     [SerializeField] float attackCooldown = 1.0f;
     [SerializeField] int damage = 1;
     [SerializeField] Transform attackBoxPosition = null;
     [SerializeField] Vector2 attackBoxSize;
     [SerializeField] LayerMask damageable;
-
+    
     // Stats
 
     [SerializeField] int maxlife = 6;
@@ -25,11 +24,9 @@ public class Enemy : MonoBehaviour
 
     GameObject target;
 
-    [SerializeField] AttackBox attackBox;
     [SerializeField] float waitTime = 1.0f;
     float waitTimer = 0f;
     bool isWaiting = false;
-    [SerializeField] float attackCooldown = 1.0f;
     float attackTimer = 0.0f;
     bool isAttacking = false;
     [SerializeField] float range = 4.0f;
@@ -56,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (!isWaiting && !isAttacking && (target.transform.position - transform.position).magnitude < range)
         {
             isAttacking = true;
-            attackBox.Attack();
+            Attack();
         }
         else if (isAttacking)
         {
@@ -90,28 +87,24 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, int comboNum)
-    {
-        if (!isAlive)
-            return;
-        life = Mathf.Clamp(life, 0, life - damage);
-        if (life == 0)
-        {
-            isAlive = false;
-            if (arena)
-                arena.AddEnemyKill();
-        }
     public void takeDamage(int damage, int comboNum)
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);
 
         if (life == 0)
-            isAlive = false;
+        {
+            if (arena)
+                arena.AddEnemyKill();
+        isAlive = false;
+        }
     }
 
     private void Attack()
     {
+        if (!isAlive)
+            return;
+
         Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
 
         foreach (Collider2D player in collidePlayers)

@@ -26,24 +26,23 @@ public class Player : MonoBehaviour
     // Combat
 
     //Combat
-    [SerializeField] AttackBox attackBox;
     [SerializeField] float attackCooldown = 1.0f;
     [SerializeField] Transform attackBoxPosition;
     [SerializeField] Vector2 attackBoxSize;
     [SerializeField] LayerMask damageable;
     [SerializeField] int damage = 1;
     [SerializeField] int maxCombo = 3;
-    [SerializeField] int maxLife = 2;
-
-    int life = 0;
-    bool isAlive = true;
+    [SerializeField] float comboUptime = 2.0f;
 
     float attackTimer = 0.0f;
+    float comboTimer = 0.0f;
     bool isAttacking = false;
 
-    // Stats
+    //Animation
+    Animator anim;
 
-    [SerializeField] int maxLife;
+    // Stats
+    [SerializeField] int maxLife = 2;
     int life;
     bool isAlive = true;
 
@@ -55,6 +54,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         RandomChangeBody();
         life = maxLife;
+        anim = GetComponent<Animator>();
     }
 
     public void Update()
@@ -67,6 +67,16 @@ public class Player : MonoBehaviour
                 isAttacking = false;
                 attackTimer = 0.0f;
             }    
+        }
+
+        if(comboCounter > 0)
+        {
+            comboTimer += Time.deltaTime;
+            if (comboTimer >= comboUptime)
+            {
+                comboCounter = 0;
+                comboTimer = 0.0f;
+            }
         }
     }
 
@@ -85,7 +95,7 @@ public class Player : MonoBehaviour
                 isFlipped = false;
             }
 
-            if (!hasAttack)
+            if (!isAttacking)
                 transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
         }
         if (isSpecial)
@@ -114,13 +124,16 @@ public class Player : MonoBehaviour
         if(context.performed)
         {
             //TODO mid air combat specific
-            hasAttack = true;
-            if(comboCounter < maxCombo)
+            isAttacking = true;
+            if(comboCounter <maxCombo)
+            {
                 comboCounter++;
-            //TODO trigger right animation combo
-            //TODO reset combo counter when last animation combo is finish
+                comboTimer = 0.0f;
+                anim.SetBool("isAttacking", isAttacking);
+                anim.SetInteger("numCombo", comboCounter);
+                CheckAttackCollision();
+            }
             //TODO Check collision with animation event
-            CheckAttackCollision();
         }
     }
 
@@ -155,16 +168,6 @@ public class Player : MonoBehaviour
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBodyChara.GetLowSprite();
     }
 
-    public void TakeDamage(int damage)
-    {
-        if (!isAlive)
-            return;
-        life = Mathf.Clamp(life, 0, life - damage);
-
-        if (life == 0)
-            isAlive = false;
-    }
-
     private void CheckAttackCollision()
     {
         Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
@@ -177,11 +180,27 @@ public class Player : MonoBehaviour
                 en.takeDamage(damage, comboCounter);
         }
     }
+
+    public void EndAttack()
+    {
+        Debug.Log(anim.GetInteger("numCombo"));
+
+        if (anim.GetInteger("numCombo") == 3)
+            comboCounter = 0;
+
+        isAttacking = false;
+        anim.SetBool("isAttacking", isAttacking);
+    }
+
     public void takeDamage(int damage)
     {
         Debug.Log("OUCH PLAYER");
 
         Mathf.Clamp(life, 0, life - damage);
+
+        //reset combo when hit
+        comboCounter = 0;
+        anim.SetInteger("numCombo", 0);
         
         if (life == 0)
             isAlive = false;
