@@ -49,3 +49,11 @@ MonoBehaviour:
   attackSpeed: 0.5
   knockbackForce: 12
   speed: 12
+  specialCoolDown: 3
+  specialDamage: 1
+  specialSize: 4
+  missilePrefab: {fileID: 168275443498942924, guid: a9c542a4b95f325438e288d791b7b31c,
+    type: 3}
+  fireRate: 0.3
+  nbMissileFired: 5
+  missileSpeed: 5

@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
    
     [SerializeField] GameObject[] animals;
 
-    AnimalChara upperBodyChara;
-    AnimalChara lowBodyChara;
+    [HideInInspector] public AnimalChara upperBodyChara;
+    [HideInInspector] public AnimalChara lowBodyChara;
 
     // Movement
 
@@ -20,22 +20,25 @@ public class Player : MonoBehaviour
     float jump = 1f;
     [HideInInspector] public bool isGrounded = true;
     bool isMoving = false;
-    bool isSpecial = false;
     [HideInInspector] public bool isFlipped = false;
 
-    //Combat
+    // Combat
+    [SerializeField] public GameObject specialBoxPosition;
+
     [SerializeField] Transform attackBoxPosition;
     [SerializeField] Vector2 attackBoxSize;
     [SerializeField] LayerMask damageable;
     [SerializeField] int damage = 1;
     [SerializeField] int maxCombo = 3;
     [SerializeField] float comboUptime = 2.0f;
-    [SerializeField] Vector2 knockBackDirection;
+    [SerializeField] public Vector2 knockBackDirection;
     [SerializeField] float attractionForce = 2.0f;
 
+    float specialTimer = 0.0f;
     float attackTimer = 0.0f;
     float comboTimer = 0.0f;
     bool isAttacking = false;
+    bool isSpecial = false;
 
     //Animation
     Animator anim;
@@ -55,7 +58,10 @@ public class Player : MonoBehaviour
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
-        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
+ 		attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
+
+        specialBoxPosition.GetComponent<SpecialBox>().Initiate();
+        specialBoxPosition.SetActive(false);
     }
 
     public void Update()
@@ -101,8 +107,13 @@ public class Player : MonoBehaviour
             if (!isAttacking)
                 transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
         }
+
+        specialBoxPosition.SetActive(false);
+
         if (isSpecial)
             isSpecial = lowBodyChara.PerformSpecialAttack(this);
+
+        specialTimer += Time.deltaTime;
     }
 
     public void OnMovement(CallbackContext context)
@@ -160,8 +171,9 @@ public class Player : MonoBehaviour
 
     public void OnSpecial(CallbackContext context)
     {
-        if (!isSpecial && context.started)
+        if (specialTimer >= upperBodyChara.GetSpecialCoolDown() && !isSpecial && context.started)
         {
+            specialTimer = 0f;
             isSpecial = true;
             lowBodyChara.InitiateSpecialAttack(this);
         }
@@ -178,12 +190,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void RandomChangeBody()
+    private void RandomChangeBody() // goat bear crab
     {
-        upperBodyChara = animals[Random.Range(0, animals.Length)].GetComponent<AnimalChara>();
+        int upperNo = Random.Range(0, animals.Length);
+        int lowNo = (upperNo + Random.Range(1, animals.Length)) % animals.Length;
+
+        upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBodyChara.GetUpperSprite();
-        lowBodyChara = animals[Random.Range(0, animals.Length)].GetComponent<AnimalChara>();
+        lowBodyChara = animals[lowNo].GetComponent<AnimalChara>();
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBodyChara.GetLowSprite();
+
+        if (lowNo == 0)
+            specialBoxPosition.transform.localScale = new Vector3(1, 1);
+        else if (lowNo == 1)
+            specialBoxPosition.transform.localScale = new Vector3(lowBodyChara.GetSpecialSize(), 1);
     }
 
     private void CheckAttackCollision()

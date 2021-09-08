@@ -4,33 +4,35 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public WorldManager worldMananger;
     [HideInInspector] public Arena arena = null;
-    [SerializeField] float attackCooldown = 1.0f;
-    [SerializeField] int damage = 1;
+    [SerializeField] protected float attackCooldown = 1.0f;
+    [SerializeField] protected int damage = 1;
     [SerializeField] Transform attackBoxPosition = null;
     [SerializeField] Vector2 attackBoxSize;
-    [SerializeField] LayerMask damageable;
+    [SerializeField] protected LayerMask damageable;
     
     // Stats
 
-    [SerializeField] int maxlife = 6;
-    int life;
-    bool isAlive = true;
+    [SerializeField] protected int maxlife = 6;
+    protected int life;
+    protected bool isAlive = true;
 
     // Movement
 
-    [SerializeField] float speed = 3f;
+    [SerializeField] protected float speed = 3f;
 
     //Combat
 
-    GameObject target;
+    protected GameObject target;
 
-    [SerializeField] float waitTime = 1.0f;
-    float waitTimer = 0f;
-    bool isWaiting = false;
-    float attackTimer = 0.0f;
-    bool isAttacking = false;
+    [SerializeField] protected float waitTime = 1.0f;
+    protected float waitTimer = 0f;
+    protected bool isWaiting = false;
+    protected float attackTimer = 0.0f;
+    protected bool isAttacking = false;
     [SerializeField] float range = 4.0f;
-    [SerializeField] float timeToDie = 1f;
+    [SerializeField] protected float timeToDie = 1f;
+
+    public bool hasBeenTargeted = false;
 
     public virtual void Start()
     {
@@ -99,7 +101,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);
-
+        hasBeenTargeted = false;
         if (life == 0)
         {
             if (arena)
@@ -128,6 +130,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
+        if (attackBoxPosition)
+            Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
     }
 }

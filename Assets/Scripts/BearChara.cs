@@ -23,12 +23,16 @@ public class BearChara : AnimalChara
         }
 
         if (player.isGrounded)
+        {
+            player.specialBoxPosition.SetActive(true);
             return false;
+        }
 
         return true;
     }
     public override void InitiateSpecialAttack(Player player)
     {
+        player.specialBoxPosition.GetComponent<SpecialBox>().ReInitiate();
         jumpUpTimer = jumpUpTime;
     }
 }
