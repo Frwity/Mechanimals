@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         if (isAttacking)
         {
             attackTimer += Time.deltaTime;
-            if(attackTimer >= attackCooldown)
+            if(attackTimer >= upperBodyChara.GetAttackSpeed())
             {
                 isAttacking = false;
                 attackTimer = 0.0f;
