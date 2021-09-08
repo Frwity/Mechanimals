@@ -85,6 +85,7 @@ public class Enemy : MonoBehaviour
 
             int layerMask = 1 << 6; // player
             layerMask = 1 << 7; // enemy
+            layerMask = 1 << 9; // Wall
             layerMask = ~layerMask;
 
             if (Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y, layerMask))
@@ -119,7 +120,7 @@ public class Enemy : MonoBehaviour
             Player p = player.gameObject.GetComponent<Player>();
 
             if (p)
-                p.takeDamage(damage);
+                p.TakeDamage(damage);
         }
     }
 

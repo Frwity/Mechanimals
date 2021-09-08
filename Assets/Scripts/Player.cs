@@ -57,7 +57,9 @@ public class Player : MonoBehaviour
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
-        //attackBoxPosition.Translate(new Vector3(attackBoxSize.x, 0.0f, 0.0f));
+        //static value ?
+        attackBoxSize.y = 2;
+        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 2 )/ 2, 0.0f, 0.0f));
     }
 
     public void Update()
@@ -202,7 +204,7 @@ public class Player : MonoBehaviour
 
                 //Knock back enemy
                 if (comboCounter == 3)
-                    en.GetComponent<Rigidbody2D>().velocity = knockBackDirection;
+                    en.GetComponent<Rigidbody2D>().velocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
             }
         }
     }
@@ -220,7 +222,7 @@ public class Player : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
     }
 
-    public void takeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         Mathf.Clamp(life, 0, life - damage);
 

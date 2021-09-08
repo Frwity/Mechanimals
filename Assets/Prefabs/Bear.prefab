@@ -47,7 +47,7 @@ MonoBehaviour:
   lowSprite: {fileID: 21300000, guid: e1ab2d6aad8611944a5078447b6f9855, type: 3}
   range: 2
   attackSpeed: 0.5
-  knockbackForce: 40
+  knockbackForce: 8
   speed: 4
   jumpUpForce: 25
   jumpDownForce: 70
