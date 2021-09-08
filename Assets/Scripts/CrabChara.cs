@@ -7,11 +7,13 @@ public class CrabChara : AnimalChara
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] int nbMissileFired = 5;
     [SerializeField] int missileSpeed = 5;
+    Vector2 pos;
     float fireTimer = 0f;
     bool HasFired = false;
 
     public override bool PerformSpecialAttack(Player player)
     {
+        pos = player.transform.position;
         fireTimer -= Time.deltaTime;
         if (!HasFired)
         {
@@ -43,9 +45,13 @@ public class CrabChara : AnimalChara
             }
         }
         if (enemy == null)
+        {
+            HasFired = true;
+            fireTimer = -1f;
             return;
+        }
 
-        Instantiate(missilePrefab, transform.position, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
+        Instantiate(missilePrefab, pos, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
             (specialDamage, missileSpeed, enemy);
     }
 }

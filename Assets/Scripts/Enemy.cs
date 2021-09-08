@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);
-
+        hasBeenTargeted = false;
         if (life == 0)
         {
             if (arena)

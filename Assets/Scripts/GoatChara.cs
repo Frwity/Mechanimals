@@ -25,5 +25,6 @@ public class GoatChara : AnimalChara
     public override void InitiateSpecialAttack(Player player)
     {
         dashTimer = dashTime;
+        player.specialBoxPosition.GetComponent<SpecialBox>().ReInitiate();
     }
 }

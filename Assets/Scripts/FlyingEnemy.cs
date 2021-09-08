@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class FlyingEnemy : Enemy
 {
+    [HideInInspector] GameObject[] waypoints;
     [SerializeField] GameObject missilePrefab;
     [SerializeField] float missileSpeed = 3f;
     [SerializeField] float fireRate = 0.3f;
+    [SerializeField] float timeBeforeReFlying = 1.0f;
+    float flyingTimer= 0.0f;
+    bool isFlying = true;
+    bool asReachTargetWaipoint = false; 
 
     public override void Update()
     {
@@ -14,6 +19,17 @@ public class FlyingEnemy : Enemy
         {
             Destroy(gameObject, timeToDie);
             return;
+        }
+        if (!isFlying)
+        {
+            flyingTimer += Time.deltaTime;
+            if (flyingTimer >= timeBeforeReFlying)
+            {
+                isFlying = true;
+                flyingTimer = 0.0f;
+            }
+            else
+                return;
         }
         if (target == null)
         {
@@ -48,7 +64,7 @@ public class FlyingEnemy : Enemy
         }
         else // movement
         {
-          
+            //transform.Translate((transform.position) speed * Time.deltaTime);
         }
     }
 
@@ -60,6 +76,12 @@ public class FlyingEnemy : Enemy
         Invoke("LaunchMissile", fireRate);
         Invoke("LaunchMissile", fireRate * 2);
 
+    }
+
+    public override void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
+    {
+        base.TakeDamage(damage, comboNum, knockbackVelocity);
+        GetComponent<Rigidbody2D>().gravityScale = 1f;
     }
 
     private void LaunchMissile()

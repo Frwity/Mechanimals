@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] int damage = 1;
     [SerializeField] int maxCombo = 3;
     [SerializeField] float comboUptime = 2.0f;
-    [SerializeField] Vector2 knockBackDirection;
+    [SerializeField] public Vector2 knockBackDirection;
     [SerializeField] float attractionForce = 2.0f;
 
     float specialTimer = 0.0f;
@@ -60,8 +60,8 @@ public class Player : MonoBehaviour
         attackBoxSize.x = upperBodyChara.GetRange();
  		attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
 
+        specialBoxPosition.GetComponent<SpecialBox>().Initiate();
         specialBoxPosition.SetActive(false);
-       
     }
 
     public void Update()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMissile : MonoBehaviour
 {
     int damage = 1;
-    float speed = 3f;
+    [SerializeField] float speed = 5f;
     GameObject target;
     [SerializeField] float upTime = 1.5f;
     float upTimer;

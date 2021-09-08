@@ -20,6 +20,8 @@ public class EnemyMissile : MonoBehaviour
             collision.GetComponent<Player>().TakeDamage(damage);
             Destroy(gameObject);
         }
+        else if (collision.CompareTag("Wall") || collision.CompareTag("Ground"))
+            Destroy(gameObject);
     }
 
     public void InitiateMissile(int _damage, float _speed, Vector2 _direction)
