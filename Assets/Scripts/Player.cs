@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask damageable;
     [SerializeField] int damage = 1;
     [SerializeField] int maxCombo = 3;
+    [SerializeField] int maxLife = 2;
+
+    int life = 0;
+    bool isAlive = true;
 
     float attackTimer = 0.0f;
 
@@ -41,6 +45,7 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         RandomChangeBody();
+        life = maxLife;
     }
 
     public void Update()
@@ -105,7 +110,7 @@ public class Player : MonoBehaviour
                 comboCounter++;
             //TODO trigger right animation combo
             //TODO reset combo counter when last animation combo is finish
-
+            //TODO Check collision with animation event
             CheckAttackCollision();
         }
     }
@@ -152,6 +157,15 @@ public class Player : MonoBehaviour
             if (en)
                 en.takeDamage(damage, comboCounter);
         }
+    }
+    public void takeDamage(int damage)
+    {
+        Debug.Log("OUCH PLAYER");
+
+        Mathf.Clamp(life, 0, life - damage);
+        
+        if (life == 0)
+            isAlive = false;
     }
 
     private void OnDrawGizmos()
