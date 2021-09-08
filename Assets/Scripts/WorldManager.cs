@@ -23,11 +23,14 @@ public class WorldManager : MonoBehaviour
 
     public void Start()
     {
+        SummonNormalEnemyAt(new Vector3(4.0f, 0.5f, 0.0f));
         firstDoor.SetActive(true);
         foreach (GameObject arena in arenas)
             arena.GetComponent<Arena>().worldMananger = this;
         foreach (GameObject scrollingZone in scrollingZones)
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
+
+        SummonNormalEnemyAt(transform.position + Vector3.right * 15);
     }
 
     public void Update()

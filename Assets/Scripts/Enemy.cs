@@ -4,7 +4,12 @@ public class Enemy : MonoBehaviour
 {
     [HideInInspector] public WorldManager worldMananger;
     [HideInInspector] public Arena arena = null;
-
+    [SerializeField] float attackCooldown = 1.0f;
+    [SerializeField] int damage = 1;
+    [SerializeField] Transform attackBoxPosition = null;
+    [SerializeField] Vector2 attackBoxSize;
+    [SerializeField] LayerMask damageable;
+    
     // Stats
 
     [SerializeField] int maxlife = 6;
@@ -19,23 +24,21 @@ public class Enemy : MonoBehaviour
 
     GameObject target;
 
-    [SerializeField] AttackBox attackBox;
     [SerializeField] float waitTime = 1.0f;
     float waitTimer = 0f;
     bool isWaiting = false;
-    [SerializeField] float attackCooldown = 1.0f;
     float attackTimer = 0.0f;
     bool isAttacking = false;
     [SerializeField] float range = 4.0f;
     [SerializeField] float timeToDie = 1f;
 
-    public void Start()
+    public virtual void Start()
     {
         life = maxlife;
         target = worldMananger.GetClosestPlayer(transform.position);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (!isAlive)
         {
@@ -50,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (!isWaiting && !isAttacking && (target.transform.position - transform.position).magnitude < range)
         {
             isAttacking = true;
-            attackBox.Attack();
+            Attack();
         }
         else if (isAttacking)
         {
@@ -80,20 +83,49 @@ public class Enemy : MonoBehaviour
             else
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-            transform.Translate(speed * Time.deltaTime, 0f, 0f);
+            int layerMask = 1 << 6; // player
+            layerMask = 1 << 7; // enemy
+            layerMask = 1 << 9; // Wall
+            layerMask = ~layerMask;
+
+            if (Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y, layerMask))
+                transform.Translate(speed * Time.deltaTime, 0f, 0f);
+            else
+                transform.Translate(-speed * 3f * Time.deltaTime, 0f, 0f);
         }
     }
 
-    public void TakeDamage(int damage, int comboNum)
+    public virtual void TakeDamage(int damage, int comboNum)
+    {
+        Debug.Log("OUCH");
+        Mathf.Clamp(life, 0, life - damage);
+
+        if (life == 0)
+        {
+            if (arena)
+                arena.AddEnemyKill();
+        isAlive = false;
+        }
+    }
+
+    private void Attack()
     {
         if (!isAlive)
             return;
-        life = Mathf.Clamp(life, 0, life - damage);
-        if (life == 0)
+
+        Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
+
+        foreach (Collider2D player in collidePlayers)
         {
-            isAlive = false;
-            if (arena)
-                arena.AddEnemyKill();
+            Player p = player.gameObject.GetComponent<Player>();
+
+            if (p)
+                p.TakeDamage(damage);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
     }
 }

@@ -25,22 +25,41 @@ public class Player : MonoBehaviour
 
     // Combat
 
-    [SerializeField] AttackBox attackBox;
+    //Combat
     [SerializeField] float attackCooldown = 1.0f;
+    [SerializeField] Transform attackBoxPosition;
+    [SerializeField] Vector2 attackBoxSize;
+    [SerializeField] LayerMask damageable;
+    [SerializeField] int damage = 1;
+    [SerializeField] int maxCombo = 3;
+    [SerializeField] float comboUptime = 2.0f;
+    [SerializeField] Vector2 knockBackDirection;
+
     float attackTimer = 0.0f;
+    float comboTimer = 0.0f;
     bool isAttacking = false;
 
-    // Stats
+    //Animation
+    Animator anim;
 
-    [SerializeField] int maxLife;
+    // Stats
+    [SerializeField] int maxLife = 2;
     int life;
     bool isAlive = true;
+
+    int comboCounter = 0;
 
     public void Awake()
     {
         life = maxLife;
         rb = GetComponent<Rigidbody2D>();
         RandomChangeBody();
+        life = maxLife;
+        anim = GetComponent<Animator>();
+        attackBoxSize.x = upperBodyChara.GetRange();
+        //static value ?
+        attackBoxSize.y = 2;
+        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 2 )/ 2, 0.0f, 0.0f));
     }
 
     public void Update()
@@ -52,7 +71,19 @@ public class Player : MonoBehaviour
             {
                 isAttacking = false;
                 attackTimer = 0.0f;
-            }    
+                rb.simulated = true;
+                rb.velocity = Vector2.zero;
+            }
+        }
+
+        if(comboCounter > 0)
+        {
+            comboTimer += Time.deltaTime;
+            if (comboTimer >= comboUptime)
+            {
+                comboCounter = 0;
+                comboTimer = 0.0f;
+            }
         }
     }
 
@@ -71,7 +102,8 @@ public class Player : MonoBehaviour
                 isFlipped = false;
             }
 
-            transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
+            if (!isAttacking)
+                transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
         }
         if (isSpecial)
             isSpecial = lowBodyChara.PerformSpecialAttack(this);
@@ -96,11 +128,28 @@ public class Player : MonoBehaviour
 
     public void OnAttack(CallbackContext context)
     {
-        if(context.performed && !isAttacking)
+        if(context.performed)
         {
-            //TODO mid air combat specific
+            //TODO polish : when spamming attack button wrong animation is lauch sometimes
+
+            //if combo is finished the player has to wait until he is on the ground
+            if (!isGrounded && anim.GetInteger("numCombo") == 3)
+                return;
+
+            if (!isGrounded)
+                rb.simulated = false;
+
             isAttacking = true;
-            attackBox.Attack();
+
+            if(comboCounter <maxCombo)
+            {
+                comboCounter++;
+                comboTimer = 0.0f;
+                anim.SetBool("isAttacking", isAttacking);
+                anim.SetInteger("numCombo", comboCounter);
+                //TODO Check collision with animation event ?
+                CheckAttackCollision();
+            }
         }
     }
 
@@ -109,6 +158,7 @@ public class Player : MonoBehaviour
         if (context.started)
         {
             RandomChangeBody();
+            attackBoxSize.x = upperBodyChara.GetRange();
         }
     }
 
@@ -124,7 +174,12 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
+        {
             isGrounded = true;
+
+            if (anim.GetInteger("numCombo") == 3)
+                anim.SetInteger("numCombo", 0);
+        }
     }
 
     private void RandomChangeBody()
@@ -135,13 +190,52 @@ public class Player : MonoBehaviour
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBodyChara.GetLowSprite();
     }
 
+    private void CheckAttackCollision()
+    {
+        Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
+
+        foreach(Collider2D enemy in collideEnemies)
+        {
+            Enemy en = enemy.gameObject.GetComponent<Enemy>();
+            
+            if (en)
+            {
+                en.TakeDamage(damage, comboCounter);
+
+                //Knock back enemy
+                if (comboCounter == 3)
+                    en.GetComponent<Rigidbody2D>().velocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
+            }
+        }
+    }
+
+    public void EndAttack()
+    {
+        Debug.Log(anim.GetInteger("numCombo"));
+
+        if (anim.GetInteger("numCombo") == 3)
+            comboCounter = 0;
+
+        isAttacking = false;
+        rb.simulated = true;
+        rb.velocity = Vector2.zero;
+        anim.SetBool("isAttacking", isAttacking);
+    }
+
     public void TakeDamage(int damage)
     {
-        if (!isAlive)
-            return;
-        life = Mathf.Clamp(life, 0, life - damage);
+        Mathf.Clamp(life, 0, life - damage);
 
+        //reset combo when hit
+        comboCounter = 0;
+        anim.SetInteger("numCombo", 0);
+        
         if (life == 0)
             isAlive = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
     }
 }
