@@ -1551,7 +1551,7 @@ PrefabInstance:
     - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
         type: 3}
       propertyPath: waves.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
         type: 3}
@@ -1633,6 +1633,51 @@ PrefabInstance:
       propertyPath: waves.Array.data[2].normalSpawnAtOnce
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[0].normalSpawn.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[1].normalSpawn.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[3].normalSpawn.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[0].normalSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 435178765}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[0].normalSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 747728847}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[1].normalSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 1736357232}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[3].normalSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 435178765}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[3].normalSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 747728847}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
+      propertyPath: waves.Array.data[3].normalSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 747728847}
     - target: {fileID: 3282059018882525664, guid: a3280dd0e31c5134fbcb92252a6a1924,
         type: 3}
       propertyPath: m_RootOrder

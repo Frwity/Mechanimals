@@ -20,13 +20,9 @@ public class Arena : MonoBehaviour
     [System.Serializable]
     public class Wave
     {
-        [SerializeField] public int normalEnemyCount;
-        [SerializeField] public int normalSpawnAtOnce;
+        [SerializeField] public GameObject[] normalSpawn;
+        [SerializeField] public GameObject[] flyingSpawn;
 
-        [SerializeField] public int flyingEnemyCount;
-        [SerializeField] public int flyingSpawnAtOnce;
-
-        [SerializeField] public float spawnDelay;
     };
     [SerializeField] Wave[] waves;
 
@@ -39,7 +35,6 @@ public class Arena : MonoBehaviour
     int totalWaveEnemy;
     int currentEnemykilled = 0;
 
-    float spawnTimer = 0f;
 
     int currentSpawnedNormal = 0;
     int currentSpawnedFlying = 0;
@@ -68,35 +63,21 @@ public class Arena : MonoBehaviour
             firstDoor.SetActive(true);
             secondTriggerZone.SetActive(false);
             isFighting = true;
-            totalWaveEnemy = waves[currentWave].flyingEnemyCount + waves[currentWave].normalEnemyCount;
+            totalWaveEnemy = waves[currentWave].flyingSpawn.Length + waves[currentWave].normalSpawn.Length;
         }
 
         if (isFighting) // fight
         {
             if (!isWaveFinishedSpawning)
             {
-                if (spawnTimer > waves[currentWave].spawnDelay)
-                {
-                    for (int i = 0; i < waves[currentWave].normalSpawnAtOnce; ++i) // spawn normal
-                    {
-                        worldMananger.SummonNormalEnemyAt(GetRandomSpawnpointPosition());
-                        if (++currentSpawnedNormal >= waves[currentWave].normalEnemyCount)
-                            break;
-                    }
+                for (int i = 0; i < waves[currentWave].normalSpawn.Length; ++i) // spawn normal
+                    worldMananger.SummonNormalEnemyAt(waves[currentWave].normalSpawn[i].transform.position);
 
-                    for (int i = 0; i < waves[currentWave].flyingSpawnAtOnce; ++i) // spawn flying
-                    {
-                        worldMananger.SummonFlyingEnemyAt(GetRandomSpawnpointPosition());
-                        if (++currentSpawnedFlying >= waves[currentWave].flyingEnemyCount)
-                            break;
-                    }
-                    if (currentSpawnedNormal >= waves[currentWave].normalEnemyCount && currentSpawnedFlying >= waves[currentWave].flyingEnemyCount)
-                        isWaveFinishedSpawning = true;
-                    spawnTimer = 0f;
-                }
-
-                spawnTimer += Time.deltaTime;
+                for (int i = 0; i < waves[currentWave].flyingSpawn.Length; ++i) // spawn normal
+                    worldMananger.SummonFlyingEnemyAt(waves[currentWave].flyingSpawn[i].transform.position);
+                isWaveFinishedSpawning = true;
             }
+
 
             // check wave ending 
             if (!isWaveFinished && totalWaveEnemy == currentEnemykilled)
@@ -114,7 +95,6 @@ public class Arena : MonoBehaviour
                     currentSpawnedFlying = 0;
                     timerBetweenWaves = 0f;
                     isWaveFinished = false;
-                    spawnTimer = 0f;
                     isWaveFinishedSpawning = false;
                     ++currentWave;
                     if (currentWave >= waves.Length)
@@ -124,7 +104,7 @@ public class Arena : MonoBehaviour
                         secondDoor.SetActive(false);
                         return;
                     }
-                    totalWaveEnemy = waves[currentWave].flyingEnemyCount + waves[currentWave].normalEnemyCount;
+                    totalWaveEnemy = waves[currentWave].flyingSpawn.Length + waves[currentWave].normalSpawn.Length;
                     currentEnemykilled = 0;
                 }
             }
