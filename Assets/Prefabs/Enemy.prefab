@@ -215,7 +215,7 @@ MonoBehaviour:
   damageable:
     serializedVersion: 2
     m_Bits: 0
-  maxlife: 20
+  maxlife: 6
   speed: 3
   waitTime: 2
   range: 2
