@@ -125,12 +125,14 @@ public class Player : MonoBehaviour
     {
         if(context.performed)
         {
-            //TODO mid air combat specific
-            isAttacking = true;
+            //if combo is finished the player has to wait until he is on the ground
+            if (!isGrounded && anim.GetInteger("numCombo") == 3)
+                return;
 
             if (!isGrounded)
                 rb.simulated = false;
 
+            isAttacking = true;
 
             if(comboCounter <maxCombo)
             {
@@ -164,7 +166,12 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
+        {
             isGrounded = true;
+
+            if (anim.GetInteger("numCombo") == 3)
+                anim.SetInteger("numCombo", 0);
+        }
     }
 
     private void RandomChangeBody()
@@ -203,8 +210,6 @@ public class Player : MonoBehaviour
 
     public void takeDamage(int damage)
     {
-        Debug.Log("OUCH PLAYER");
-
         Mathf.Clamp(life, 0, life - damage);
 
         //reset combo when hit
