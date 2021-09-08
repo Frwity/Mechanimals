@@ -5,7 +5,6 @@ using UnityEngine;
 public class Arena : MonoBehaviour
 {
     [HideInInspector] public WorldManager worldMananger;
-    [SerializeField] GameObject[] enemySpawnPoint;
 
     [SerializeField] GameObject firstDoor;
     [SerializeField] GameObject secondDoor;
@@ -109,11 +108,6 @@ public class Arena : MonoBehaviour
                 }
             }
         }
-    }
-
-    Vector3 GetRandomSpawnpointPosition()
-    {
-        return enemySpawnPoint[Random.Range(0, enemySpawnPoint.Length)].transform.position;
     }
 
     public void AddEnemyKill()

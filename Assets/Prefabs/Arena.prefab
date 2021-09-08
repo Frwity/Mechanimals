@@ -300,14 +300,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldMananger: {fileID: 0}
-  enemySpawnPoint:
-  - {fileID: 2856607554440447274}
   firstDoor: {fileID: 2571673541719588892}
   secondDoor: {fileID: 735403925648597764}
   firstTriggerZone: {fileID: 4122683017058799395}
   secondTriggerZone: {fileID: 7696395740326185730}
-  cameraAnchor: {fileID: 0}
-  waves: []
+  cameraAnchor: {fileID: 7913114632870648213}
+  waves:
+  - normalSpawn:
+    - {fileID: 2856607554440447274}
+    flyingSpawn: []
   timeBetweenWaves: 5
 --- !u!1 &7696395740326185730
 GameObject:
