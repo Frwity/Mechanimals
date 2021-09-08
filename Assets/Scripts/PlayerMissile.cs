@@ -28,7 +28,7 @@ public class PlayerMissile : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage, 3);
+            collision.GetComponent<Enemy>().TakeDamage(damage, 3, Vector2.one);
             Destroy(gameObject);
         }
     }

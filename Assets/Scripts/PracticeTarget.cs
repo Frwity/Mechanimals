@@ -29,7 +29,7 @@ public class PracticeTarget : Enemy
             renderer.color = Color.green;
     }
 
-    public override void TakeDamage(int damage, int comboNum)
+    public override void TakeDamage(int damage, int comboNum, Vector2 knockBackVelocity)
     {
         isHit = true;
     }
