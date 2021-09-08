@@ -49,5 +49,9 @@ MonoBehaviour:
   attackSpeed: 0.5
   knockbackForce: 18
   speed: 15
-  dashForce: 40
+  specialCoolDown: 1
+  specialDamage: 3
+  specialSize: 4
+  missilePrefab: {fileID: 0}
+  dashForce: 85
   dashTime: 0.2
