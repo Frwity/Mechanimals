@@ -218,13 +218,14 @@ MonoBehaviour:
   isGrounded: 1
   isFlipped: 0
   attackCooldown: 1
-  attackBoxPosition: {fileID: 0}
+  attackBoxPosition: {fileID: 6843287244993332511}
   attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   damage: 1
   maxCombo: 3
+  comboUptime: 2
   maxLife: 10
 --- !u!114 &4464289495205428773
 MonoBehaviour:

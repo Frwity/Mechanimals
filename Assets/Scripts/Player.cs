@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField] int damage = 1;
     [SerializeField] int maxCombo = 3;
     [SerializeField] float comboUptime = 2.0f;
+    [SerializeField] Vector2 knockBackDirection;
 
     float attackTimer = 0.0f;
     float comboTimer = 0.0f;
@@ -55,6 +56,8 @@ public class Player : MonoBehaviour
         RandomChangeBody();
         life = maxLife;
         anim = GetComponent<Animator>();
+        attackBoxSize.x = upperBodyChara.GetRange();
+        //attackBoxPosition.Translate(new Vector3(attackBoxSize.x, 0.0f, 0.0f));
     }
 
     public void Update()
@@ -68,7 +71,7 @@ public class Player : MonoBehaviour
                 attackTimer = 0.0f;
                 rb.simulated = true;
                 rb.velocity = Vector2.zero;
-            }    
+            }
         }
 
         if(comboCounter > 0)
@@ -125,6 +128,8 @@ public class Player : MonoBehaviour
     {
         if(context.performed)
         {
+            //TODO polish : when spamming attack button wrong animation is lauch sometimes
+
             //if combo is finished the player has to wait until he is on the ground
             if (!isGrounded && anim.GetInteger("numCombo") == 3)
                 return;
@@ -151,6 +156,7 @@ public class Player : MonoBehaviour
         if (context.started)
         {
             RandomChangeBody();
+            attackBoxSize.x = upperBodyChara.GetRange();
         }
     }
 
@@ -191,7 +197,13 @@ public class Player : MonoBehaviour
             Enemy en = enemy.gameObject.GetComponent<Enemy>();
             
             if (en)
+            {
                 en.takeDamage(damage, comboCounter);
+
+                //Knock back enemy
+                if (comboCounter == 3)
+                    en.GetComponent<Rigidbody2D>().velocity = knockBackDirection;
+            }
         }
     }
 

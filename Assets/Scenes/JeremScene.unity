@@ -338,16 +338,6 @@ PrefabInstance:
       propertyPath: attackBoxSize.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3036735522805165335, guid: d3eca025a9be84a49a9be0b6ea8411e0,
-        type: 3}
-      propertyPath: attackBoxPosition
-      value: 
-      objectReference: {fileID: 704700780}
-    - target: {fileID: 3036735522805165335, guid: d3eca025a9be84a49a9be0b6ea8411e0,
-        type: 3}
-      propertyPath: damageable.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 6843287244993332511, guid: d3eca025a9be84a49a9be0b6ea8411e0,
         type: 3}
       propertyPath: m_RootOrder
@@ -355,8 +345,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6843287244993332511, guid: d3eca025a9be84a49a9be0b6ea8411e0,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843287244993332511, guid: d3eca025a9be84a49a9be0b6ea8411e0,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.39
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 7020830349603269267, guid: d3eca025a9be84a49a9be0b6ea8411e0,
         type: 3}
@@ -680,12 +675,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!4 &704700780 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6843287244993332511, guid: d3eca025a9be84a49a9be0b6ea8411e0,
-    type: 3}
-  m_PrefabInstance: {fileID: 177500950}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &887070441
 GameObject:
   m_ObjectHideFlags: 0
