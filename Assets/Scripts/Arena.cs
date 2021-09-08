@@ -13,6 +13,8 @@ public class Arena : MonoBehaviour
     [SerializeField] GameObject firstTriggerZone;
     [SerializeField] GameObject secondTriggerZone;
 
+    [SerializeField] GameObject cameraAnchor;
+
     bool isFighting = false;
 
     [System.Serializable]
@@ -29,17 +31,17 @@ public class Arena : MonoBehaviour
     [SerializeField] Wave[] waves;
 
     [SerializeField] float timeBetweenWaves = 5f;
-    public float timerBetweenWaves = 0f;
-    public bool isWaveFinished = false;
-    public bool isWaveFinishedSpawning = false;
+    float timerBetweenWaves = 0f;
+    bool isWaveFinished = false;
+    bool isWaveFinishedSpawning = false;
 
-    public int currentWave = 0;
-    public int totalWaveEnemy;
-    public int currentEnemykilled = 0;
+    int currentWave = 0;
+    int totalWaveEnemy;
+    int currentEnemykilled = 0;
 
-    public float spawnTimer = 0f;
+    float spawnTimer = 0f;
 
-    public int currentSpawnedNormal = 0;
+    int currentSpawnedNormal = 0;
     int currentSpawnedFlying = 0;
 
 
@@ -57,12 +59,13 @@ public class Arena : MonoBehaviour
         if (firstTriggerZone.GetComponent<TriggerZone>().isTrigger)
         {
             worldMananger.currentArena = this;
+            worldMananger.currentScrollingZone = null;
             firstTriggerZone.SetActive(false);
-            firstDoor.SetActive(true);
         }
         // if trigger zone 2
         if (secondTriggerZone.GetComponent<TriggerZone>().isTrigger)
         {
+            firstDoor.SetActive(true);
             secondTriggerZone.SetActive(false);
             isFighting = true;
             totalWaveEnemy = waves[currentWave].flyingEnemyCount + waves[currentWave].normalEnemyCount;
@@ -136,5 +139,10 @@ public class Arena : MonoBehaviour
     public void AddEnemyKill()
     {
         currentEnemykilled++;
+    }
+
+    public Vector3 GetCameraPostion()
+    {
+        return cameraAnchor.transform.position;
     }
 }
