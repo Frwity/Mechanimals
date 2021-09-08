@@ -9,29 +9,35 @@ public class WorldManager : MonoBehaviour
 {
     [SerializeField] GameObject[] enemyPrefabs;
     [SerializeField] GameObject[] arenas;
+    [SerializeField] GameObject[] scrollingZones;
 
     [SerializeField] public Arena currentArena = null;
+    [SerializeField] public ScrollingZone currentScrollingZone = null;
 
     [SerializeField] GameObject firstDoor;
 
     [HideInInspector] public GameObject player1 = null;
     [HideInInspector] public GameObject player2 = null;
 
-    [SerializeField] Camera camera;
+    [SerializeField] new Camera camera = null;
 
     public void Start()
     {
         firstDoor.SetActive(true);
         foreach (GameObject arena in arenas)
             arena.GetComponent<Arena>().worldMananger = this;
+        foreach (GameObject scrollingZone in scrollingZones)
+            scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
     }
 
     public void Update()
     {
-        if (player1 != null && player2 != null && currentArena == null)
-            camera.transform.position = new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, 7f, -20f);
+        if (player1 != null && player2 != null && currentArena == null && currentScrollingZone == null)
+            camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, 7f, -20f), 0.01f); 
         else if (currentArena != null)
-            camera.transform.position = currentArena.transform.position;
+            camera.transform.position = Vector3.Lerp(camera.transform.position, currentArena.GetCameraPostion(), 0.01f);
+        else if (currentScrollingZone)
+            camera.transform.position = Vector3.Lerp(camera.transform.position,currentScrollingZone.GetCameraPostion(), 0.01f);
     }
 
     public void AssignSpawningPlayer(PlayerInput playerInput)

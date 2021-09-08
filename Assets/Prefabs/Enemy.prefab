@@ -306,6 +306,7 @@ MonoBehaviour:
   maxlife: 1
   speed: 3
   attackBox: {fileID: 348249811525057917}
-  waitTime: 1
+  waitTime: 2
   attackCooldown: 1
   range: 2
+  timeToDie: 1
