@@ -48,6 +48,6 @@ MonoBehaviour:
   range: 1
   attackSpeed: 0.5
   knockbackForce: 5
-  speed: 7
+  speed: 18
   dashForce: 40
   dashTime: 0.2
