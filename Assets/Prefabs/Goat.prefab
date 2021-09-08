@@ -47,7 +47,11 @@ MonoBehaviour:
   lowSprite: {fileID: 21300000, guid: c8a87d7d4ab8b084bba63b55043c7b72, type: 3}
   range: 1
   attackSpeed: 0.5
-  knockbackForce: 18
-  speed: 15
-  dashForce: 40
+  knockbackForce: 12
+  speed: 18
+  specialCoolDown: 1
+  specialDamage: 3
+  specialSize: 4
+  missilePrefab: {fileID: 0}
+  dashForce: 85
   dashTime: 0.2
