@@ -28,6 +28,8 @@ public class WorldManager : MonoBehaviour
             arena.GetComponent<Arena>().worldMananger = this;
         foreach (GameObject scrollingZone in scrollingZones)
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
+
+        SummonNormalEnemyAt(transform.position + Vector3.right * 15);
     }
 
     public void Update()

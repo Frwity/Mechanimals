@@ -34,11 +34,6 @@ public class Arena : MonoBehaviour
     int totalWaveEnemy;
     int currentEnemykilled = 0;
 
-
-    int currentSpawnedNormal = 0;
-    int currentSpawnedFlying = 0;
-
-
     public void Start()
     {
         firstDoor.SetActive(false);
@@ -90,8 +85,6 @@ public class Arena : MonoBehaviour
                 timerBetweenWaves += Time.deltaTime;
                 if (timerBetweenWaves > timeBetweenWaves)
                 {
-                    currentSpawnedNormal = 0;
-                    currentSpawnedFlying = 0;
                     timerBetweenWaves = 0f;
                     isWaveFinished = false;
                     isWaveFinishedSpawning = false;

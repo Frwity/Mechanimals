@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 7020830349603269270}
   - component: {fileID: 3036735522805165335}
   - component: {fileID: 4464289495205428773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -312,9 +312,9 @@ MonoBehaviour:
   jumpForce: 10
   isGrounded: 1
   isFlipped: 0
-  maxLife: 10
   attackBox: {fileID: 5195260061570842041}
   attackCooldown: 1
+  maxLife: 10
 --- !u!114 &4464289495205428773
 MonoBehaviour:
   m_ObjectHideFlags: 0
