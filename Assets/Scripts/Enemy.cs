@@ -126,6 +126,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
+        if (attackBoxPosition)
+            Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
     }
 }
