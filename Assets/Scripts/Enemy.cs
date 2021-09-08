@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(int damage, int comboNum)
+    public virtual void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);
@@ -104,8 +104,10 @@ public class Enemy : MonoBehaviour
         {
             if (arena)
                 arena.AddEnemyKill();
-        isAlive = false;
+            isAlive = false;
         }
+        else
+            GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
     }
 
     private void Attack()
