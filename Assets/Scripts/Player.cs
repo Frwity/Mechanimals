@@ -66,6 +66,8 @@ public class Player : MonoBehaviour
             {
                 isAttacking = false;
                 attackTimer = 0.0f;
+                rb.simulated = true;
+                rb.velocity = Vector2.zero;
             }    
         }
 
@@ -125,6 +127,11 @@ public class Player : MonoBehaviour
         {
             //TODO mid air combat specific
             isAttacking = true;
+
+            if (!isGrounded)
+                rb.simulated = false;
+
+
             if(comboCounter <maxCombo)
             {
                 comboCounter++;
@@ -189,6 +196,8 @@ public class Player : MonoBehaviour
             comboCounter = 0;
 
         isAttacking = false;
+        rb.simulated = true;
+        rb.velocity = Vector2.zero;
         anim.SetBool("isAttacking", isAttacking);
     }
 
