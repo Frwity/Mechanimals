@@ -8,8 +8,14 @@ public class EnemyMissile : MonoBehaviour
     float speed = 3;
     Vector2 direction;
 
+    float timer = 0;
+
     public void Update()
     {
+        timer += Time.deltaTime;
+        if (timer >= 10f)
+            Destroy(gameObject);
+
         transform.Translate(direction * speed * Time.deltaTime);
     }
 

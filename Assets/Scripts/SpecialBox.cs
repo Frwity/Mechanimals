@@ -30,7 +30,7 @@ public class SpecialBox : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
             Player player = transform.parent.GetComponent<Player>();
             enemy.TakeDamage(player.upperBodyChara.GetSpecialDamage(), 3,
-                (transform.position.x < enemy.transform.position.x ? player.knockBackDirection : new Vector2(-player.knockBackDirection.x, player.knockBackDirection.y)) * player.upperBodyChara.GetKnockbackForce());
+                (transform.position.x < enemy.transform.position.x ? player.knockBackDirection : new Vector2(-player.knockBackDirection.x, player.knockBackDirection.y)) * player.upperBodyChara.GetSpecialKnockbackForce());
         }
     }
 }

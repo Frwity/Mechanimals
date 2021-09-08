@@ -10,6 +10,7 @@ public class AnimalChara : MonoBehaviour
     [SerializeField] protected float range = 1f;
     [SerializeField] protected float attackSpeed = 0.5f;
     [SerializeField] protected float knockbackForce = 40f;
+    [SerializeField] protected float specialKnockbackForce = 40f;
     [SerializeField] protected float speed = 3f;
     [SerializeField] protected float specialCoolDown = 3f;
     [SerializeField] protected int specialDamage = 1;
@@ -23,6 +24,7 @@ public class AnimalChara : MonoBehaviour
     public float GetRange() { return range; }
     public float GetAttackSpeed() { return attackSpeed; }
     public float GetKnockbackForce() { return knockbackForce; }
+    public float GetSpecialKnockbackForce() { return specialKnockbackForce; }
     public float GetSpeed() { return speed; }
     public float GetSpecialCoolDown() { return specialCoolDown; }
     public int GetSpecialDamage() { return specialDamage; }

@@ -7,12 +7,18 @@ public class PlayerMissile : MonoBehaviour
     int damage = 1;
     [SerializeField] float speed = 5f;
     GameObject target;
+    Vector2 knockback;
     [SerializeField] float upTime = 1.5f;
     float upTimer;
     bool isPicking = false;
 
     public void Update()
     {
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         if (upTimer >= upTime)
             isPicking = true;
         else
@@ -28,15 +34,16 @@ public class PlayerMissile : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage, 3, Vector2.one);
+            collision.GetComponent<Enemy>().TakeDamage(damage, 3, knockback);
             Destroy(gameObject);
         }
     }
 
-    public void InitiateMissile(int _damage, float _speed, GameObject _target)
+    public void InitiateMissile(int _damage, float _speed, GameObject _target, Vector2 _knockback)
     {
         damage = _damage;
         speed = _speed;
         target = _target;
+        knockback = _knockback;
     }
 }

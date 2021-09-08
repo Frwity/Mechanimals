@@ -1,9 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [HideInInspector] public List<GameObject> waypoints;
     [HideInInspector] public WorldManager worldMananger;
     [HideInInspector] public Arena arena = null;
+
     [SerializeField] protected float attackCooldown = 1.0f;
     [SerializeField] protected int damage = 1;
     [SerializeField] Transform attackBoxPosition = null;
@@ -31,8 +35,6 @@ public class Enemy : MonoBehaviour
     protected bool isAttacking = false;
     [SerializeField] float range = 4.0f;
     [SerializeField] protected float timeToDie = 1f;
-
-    public bool hasBeenTargeted = false;
 
     public virtual void Start()
     {
@@ -99,9 +101,8 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
     {
-        Debug.Log("OUCH");
-        Mathf.Clamp(life, 0, life - damage);
-        hasBeenTargeted = false;
+        Debug.Log("OUCH base");
+        life = Mathf.Clamp(life, 0, life - damage);
         if (life == 0)
         {
             if (arena)

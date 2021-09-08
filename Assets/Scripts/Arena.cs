@@ -21,16 +21,17 @@ public class Arena : MonoBehaviour
     {
         [SerializeField] public GameObject[] normalSpawn;
         [SerializeField] public GameObject[] flyingSpawn;
+        [SerializeField] public GameObject[] flyingPoint;
 
     };
-    [SerializeField] Wave[] waves;
+    [SerializeField] public Wave[] waves;
 
     [SerializeField] float timeBetweenWaves = 5f;
     float timerBetweenWaves = 0f;
     bool isWaveFinished = false;
     bool isWaveFinishedSpawning = false;
 
-    int currentWave = 0;
+    [HideInInspector] public int currentWave = 0;
     int totalWaveEnemy;
     int currentEnemykilled = 0;
 
@@ -62,7 +63,7 @@ public class Arena : MonoBehaviour
 
         if (isFighting) // fight
         {
-            if (!isWaveFinishedSpawning)
+            if (!isWaveFinishedSpawning) // summon
             {
                 for (int i = 0; i < waves[currentWave].normalSpawn.Length; ++i) // spawn normal
                     worldMananger.SummonNormalEnemyAt(waves[currentWave].normalSpawn[i].transform.position);

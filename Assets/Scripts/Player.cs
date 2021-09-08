@@ -242,7 +242,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Mathf.Clamp(life, 0, life - damage);
+        life = Mathf.Clamp(life, 0, life - damage);
 
         //reset combo when hit
         comboCounter = 0;

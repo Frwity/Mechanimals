@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class FlyingEnemy : Enemy
 {
-    [HideInInspector] GameObject[] waypoints;
     [SerializeField] GameObject missilePrefab;
     [SerializeField] float missileSpeed = 3f;
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float timeBeforeReFlying = 1.0f;
     float flyingTimer= 0.0f;
     bool isFlying = true;
-    bool asReachTargetWaipoint = false; 
+    bool asReachTargetWaypoint = true;
+    Vector3 waypointTarget;
+    [HideInInspector] public int waypointNo = 0;
+
+    public override void Start()
+    {
+        base.Start();
+
+    }
 
     public override void Update()
     {
@@ -36,7 +43,7 @@ public class FlyingEnemy : Enemy
             target = worldMananger.GetRandomPlayer(transform.position);
             return;
         }
-        if (!isWaiting && !isAttacking)
+        if (!isWaiting && !isAttacking && asReachTargetWaypoint)
         {
             isAttacking = true;
             Attack();
@@ -59,12 +66,19 @@ public class FlyingEnemy : Enemy
             {
                 isWaiting = false;
                 waitTimer = 0.0f;
-                target = worldMananger.GetClosestPlayer(transform.position);
+                Debug.Log(waypointNo);
+                waypointNo = (waypointNo + Random.Range(0, waypoints.Count)) % waypoints.Count;
+                Debug.Log(waypointNo);
+                waypointTarget = waypoints[waypointNo].transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                target = null;
+                asReachTargetWaypoint = false;
             }
         }
         else // movement
         {
-            //transform.Translate((transform.position) speed * Time.deltaTime);
+            transform.Translate((waypointTarget - transform.position).normalized * speed * Time.deltaTime);
+            if ((waypointTarget - transform.position).magnitude < 1f)
+                asReachTargetWaypoint = true;
         }
     }
 
