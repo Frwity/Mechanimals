@@ -16,43 +16,43 @@ public class AttackBox : MonoBehaviour
     bool hasAttack = false;
 
     int comboCounter = 0;
-    int attackCounter = 0;
 
-    private void Start()
+    public void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         sp = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    public void Update()
     {
-        if(hasAttack)
+        if(gameObject.activeSelf)
         {
             attackTimer += Time.deltaTime;
-            if (attackTimer >= attackWindow)
+            if(attackTimer >= attackWindow)
             {
                 FinishAttack();
             }
+        }
 
-            //Combo
+        //Combo
+        if(hasAttack)
+        {
             comboTimer += Time.deltaTime;
             if(comboTimer >= ComboUptime || comboCounter == maxCombo)
             {
                 comboCounter = 0;
                 hasAttack = false;
                 comboTimer = 0.0f;
-                attackCounter = 0;
             }
         }
     }
 
-    public void Attack()
+    public void Attack() 
     {
         hasAttack = true;
         boxCollider.enabled = true;
         sp.enabled = true;
         attackTimer = 0.0f;
-        Mathf.Clamp(attackCounter, attackCounter++, maxCombo);
     }
 
     public void FinishAttack()
@@ -61,13 +61,19 @@ public class AttackBox : MonoBehaviour
         sp.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy" && transform.parent.tag == "Player")
         {
-            Enemy en = collision.gameObject.GetComponent<Enemy>();
-            en.takeDamage(1, comboCounter);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(1, comboCounter);
             comboCounter++;
-        };
+            Debug.Log("Combo : " + comboCounter);
+        }
+
+        if (collision.gameObject.tag == "Player" && transform.parent.tag == "Enemy")
+        {
+            comboCounter++;
+            collision.gameObject.GetComponent<Player>().TakeDamage(1);
+        }
     }
 }
