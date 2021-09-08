@@ -198,7 +198,7 @@ public class Player : MonoBehaviour
             
             if (en)
             {
-                en.takeDamage(damage, comboCounter);
+                en.TakeDamage(damage, comboCounter);
 
                 //Knock back enemy
                 if (comboCounter == 3)
