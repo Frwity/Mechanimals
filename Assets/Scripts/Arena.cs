@@ -13,33 +13,30 @@ public class Arena : MonoBehaviour
     [SerializeField] GameObject firstTriggerZone;
     [SerializeField] GameObject secondTriggerZone;
 
+    [SerializeField] GameObject cameraAnchor;
+
     bool isFighting = false;
 
     [System.Serializable]
     public class Wave
     {
-        [SerializeField] public int normalEnemyCount;
-        [SerializeField] public int normalSpawnAtOnce;
+        [SerializeField] public GameObject[] normalSpawn;
+        [SerializeField] public GameObject[] flyingSpawn;
 
-        [SerializeField] public int flyingEnemyCount;
-        [SerializeField] public int flyingSpawnAtOnce;
-
-        [SerializeField] public float spawnDelay;
     };
     [SerializeField] Wave[] waves;
 
     [SerializeField] float timeBetweenWaves = 5f;
-    public float timerBetweenWaves = 0f;
-    public bool isWaveFinished = false;
-    public bool isWaveFinishedSpawning = false;
+    float timerBetweenWaves = 0f;
+    bool isWaveFinished = false;
+    bool isWaveFinishedSpawning = false;
 
-    public int currentWave = 0;
-    public int totalWaveEnemy;
-    public int currentEnemykilled = 0;
+    int currentWave = 0;
+    int totalWaveEnemy;
+    int currentEnemykilled = 0;
 
-    public float spawnTimer = 0f;
 
-    public int currentSpawnedNormal = 0;
+    int currentSpawnedNormal = 0;
     int currentSpawnedFlying = 0;
 
 
@@ -57,43 +54,30 @@ public class Arena : MonoBehaviour
         if (firstTriggerZone.GetComponent<TriggerZone>().isTrigger)
         {
             worldMananger.currentArena = this;
+            worldMananger.currentScrollingZone = null;
             firstTriggerZone.SetActive(false);
-            firstDoor.SetActive(true);
         }
         // if trigger zone 2
         if (secondTriggerZone.GetComponent<TriggerZone>().isTrigger)
         {
+            firstDoor.SetActive(true);
             secondTriggerZone.SetActive(false);
             isFighting = true;
-            totalWaveEnemy = waves[currentWave].flyingEnemyCount + waves[currentWave].normalEnemyCount;
+            totalWaveEnemy = waves[currentWave].flyingSpawn.Length + waves[currentWave].normalSpawn.Length;
         }
 
         if (isFighting) // fight
         {
             if (!isWaveFinishedSpawning)
             {
-                if (spawnTimer > waves[currentWave].spawnDelay)
-                {
-                    for (int i = 0; i < waves[currentWave].normalSpawnAtOnce; ++i) // spawn normal
-                    {
-                        worldMananger.SummonNormalEnemyAt(GetRandomSpawnpointPosition());
-                        if (++currentSpawnedNormal >= waves[currentWave].normalEnemyCount)
-                            break;
-                    }
+                for (int i = 0; i < waves[currentWave].normalSpawn.Length; ++i) // spawn normal
+                    worldMananger.SummonNormalEnemyAt(waves[currentWave].normalSpawn[i].transform.position);
 
-                    for (int i = 0; i < waves[currentWave].flyingSpawnAtOnce; ++i) // spawn flying
-                    {
-                        worldMananger.SummonFlyingEnemyAt(GetRandomSpawnpointPosition());
-                        if (++currentSpawnedFlying >= waves[currentWave].flyingEnemyCount)
-                            break;
-                    }
-                    if (currentSpawnedNormal >= waves[currentWave].normalEnemyCount && currentSpawnedFlying >= waves[currentWave].flyingEnemyCount)
-                        isWaveFinishedSpawning = true;
-                    spawnTimer = 0f;
-                }
-
-                spawnTimer += Time.deltaTime;
+                for (int i = 0; i < waves[currentWave].flyingSpawn.Length; ++i) // spawn normal
+                    worldMananger.SummonFlyingEnemyAt(waves[currentWave].flyingSpawn[i].transform.position);
+                isWaveFinishedSpawning = true;
             }
+
 
             // check wave ending 
             if (!isWaveFinished && totalWaveEnemy == currentEnemykilled)
@@ -111,7 +95,6 @@ public class Arena : MonoBehaviour
                     currentSpawnedFlying = 0;
                     timerBetweenWaves = 0f;
                     isWaveFinished = false;
-                    spawnTimer = 0f;
                     isWaveFinishedSpawning = false;
                     ++currentWave;
                     if (currentWave >= waves.Length)
@@ -121,7 +104,7 @@ public class Arena : MonoBehaviour
                         secondDoor.SetActive(false);
                         return;
                     }
-                    totalWaveEnemy = waves[currentWave].flyingEnemyCount + waves[currentWave].normalEnemyCount;
+                    totalWaveEnemy = waves[currentWave].flyingSpawn.Length + waves[currentWave].normalSpawn.Length;
                     currentEnemykilled = 0;
                 }
             }
@@ -136,5 +119,10 @@ public class Arena : MonoBehaviour
     public void AddEnemyKill()
     {
         currentEnemykilled++;
+    }
+
+    public Vector3 GetCameraPostion()
+    {
+        return cameraAnchor.transform.position;
     }
 }

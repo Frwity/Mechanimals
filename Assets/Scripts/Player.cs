@@ -131,9 +131,9 @@ public class Player : MonoBehaviour
                 comboTimer = 0.0f;
                 anim.SetBool("isAttacking", isAttacking);
                 anim.SetInteger("numCombo", comboCounter);
+                //TODO Check collision with animation event ?
                 CheckAttackCollision();
             }
-            //TODO Check collision with animation event
         }
     }
 

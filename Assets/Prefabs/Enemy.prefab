@@ -211,12 +211,12 @@ MonoBehaviour:
   attackCooldown: 1
   damage: 1
   attackBoxPosition: {fileID: 2460852699784031824}
-  attackBoxSize: {x: 1.5, y: 1}
+  attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 128
-  maxlife: 5
+    m_Bits: 0
+  maxlife: 1
   speed: 3
-  waitTime: 1
+  waitTime: 2
   range: 2
   timeToDie: 1

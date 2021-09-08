@@ -851,7 +851,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.11666667
+  - time: 1
     functionName: EndAttack
     data: 
     objectReferenceParameter: {fileID: 7020830349603269271, guid: d3eca025a9be84a49a9be0b6ea8411e0,
