@@ -32,13 +32,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] float range = 4.0f;
     [SerializeField] float timeToDie = 1f;
 
-    public void Start()
+    public virtual void Start()
     {
         life = maxlife;
         target = worldMananger.GetClosestPlayer(transform.position);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (!isAlive)
         {
@@ -83,11 +83,18 @@ public class Enemy : MonoBehaviour
             else
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-            transform.Translate(speed * Time.deltaTime, 0f, 0f);
+            int layerMask = 1 << 6; // player
+            layerMask = 1 << 7; // enemy
+            layerMask = ~layerMask;
+
+            if (Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y, layerMask))
+                transform.Translate(speed * Time.deltaTime, 0f, 0f);
+            else
+                transform.Translate(-speed * 3f * Time.deltaTime, 0f, 0f);
         }
     }
 
-    public void takeDamage(int damage, int comboNum)
+    public virtual void TakeDamage(int damage, int comboNum)
     {
         Debug.Log("OUCH");
         Mathf.Clamp(life, 0, life - damage);

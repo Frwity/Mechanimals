@@ -5,7 +5,6 @@ using UnityEngine;
 public class Arena : MonoBehaviour
 {
     [HideInInspector] public WorldManager worldMananger;
-    [SerializeField] GameObject[] enemySpawnPoint;
 
     [SerializeField] GameObject firstDoor;
     [SerializeField] GameObject secondDoor;
@@ -34,11 +33,6 @@ public class Arena : MonoBehaviour
     int currentWave = 0;
     int totalWaveEnemy;
     int currentEnemykilled = 0;
-
-
-    int currentSpawnedNormal = 0;
-    int currentSpawnedFlying = 0;
-
 
     public void Start()
     {
@@ -91,8 +85,6 @@ public class Arena : MonoBehaviour
                 timerBetweenWaves += Time.deltaTime;
                 if (timerBetweenWaves > timeBetweenWaves)
                 {
-                    currentSpawnedNormal = 0;
-                    currentSpawnedFlying = 0;
                     timerBetweenWaves = 0f;
                     isWaveFinished = false;
                     isWaveFinishedSpawning = false;
@@ -109,11 +101,6 @@ public class Arena : MonoBehaviour
                 }
             }
         }
-    }
-
-    Vector3 GetRandomSpawnpointPosition()
-    {
-        return enemySpawnPoint[Random.Range(0, enemySpawnPoint.Length)].transform.position;
     }
 
     public void AddEnemyKill()
