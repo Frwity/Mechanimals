@@ -110,5 +110,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 6165420679734019471, guid: 56abc51701754554a997d90d07b311d6, type: 3}
+  - {fileID: 6165420679734019471, guid: 81ffe917dfdc72b44b68de47d7dfafbf, type: 3}
+  arenas: []
+  scrollingZones: []
+  currentArena: {fileID: 0}
+  currentScrollingZone: {fileID: 0}
+  firstDoor: {fileID: 0}
   player1: {fileID: 0}
   player2: {fileID: 0}
+  camera: {fileID: 0}

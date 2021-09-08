@@ -23,7 +23,11 @@ public class BearChara : AnimalChara
         }
 
         if (player.isGrounded)
+        {
+            player.specialBoxPosition.SetActive(true);
+
             return false;
+        }
 
         return true;
     }

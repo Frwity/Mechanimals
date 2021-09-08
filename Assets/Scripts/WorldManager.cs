@@ -23,7 +23,6 @@ public class WorldManager : MonoBehaviour
 
     public void Start()
     {
-        SummonNormalEnemyAt(new Vector3(4.0f, 0.5f, 0.0f));
         firstDoor.SetActive(true);
         foreach (GameObject arena in arenas)
             arena.GetComponent<Arena>().worldMananger = this;
@@ -31,6 +30,8 @@ public class WorldManager : MonoBehaviour
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
 
         SummonNormalEnemyAt(transform.position + Vector3.right * 15);
+        SummonFlyingEnemyAt(transform.position + Vector3.right * 15);
+
     }
 
     public void Update()
@@ -74,6 +75,18 @@ public class WorldManager : MonoBehaviour
             return player2;
     }
 
+    public GameObject GetRandomPlayer(Vector3 pos)
+    {
+        if (player1 == null)
+            return null;
+        if (player2 == null)
+            return player1;
+        if (Random.Range(0, 101) % 2 == 0)
+            return player1;
+        else
+            return player2;
+    }
+
     public void SummonNormalEnemyAt(Vector3 pos)
     {
         Enemy enemy = Instantiate(enemyPrefabs[0], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
@@ -83,9 +96,9 @@ public class WorldManager : MonoBehaviour
 
     public void SummonFlyingEnemyAt(Vector3 pos)
     {
-        //Enemy enemy = Instantiate(enemyPrefabs[1], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
-        //enemy.worldMananger = this;
-        //enemy.arena = currentArena;
+        Enemy enemy = Instantiate(enemyPrefabs[1], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
+        enemy.worldMananger = this;
+        enemy.arena = currentArena;
     }
 
     public void SummonRandomEnemyAt(Vector3 pos)

@@ -15,8 +15,10 @@ public class GoatChara : AnimalChara
         if (dashTimer < 0f)
         {
             player.rb.velocity = new Vector2(0, player.rb.velocity.y);
+            player.specialBoxPosition.SetActive(false);
             return false;
         }
+        player.specialBoxPosition.SetActive(true);
         return true;
     }
 
