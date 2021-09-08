@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] int maxCombo = 3;
     [SerializeField] float comboUptime = 2.0f;
     [SerializeField] Vector2 knockBackDirection;
+    [SerializeField] float attractionForce = 2.0f;
 
     float attackTimer = 0.0f;
     float comboTimer = 0.0f;
@@ -195,13 +196,15 @@ public class Player : MonoBehaviour
             
             if (en)
             {
-                en.TakeDamage(damage, comboCounter);
-
+                Vector2 knockbackVelocity = Vector2.zero;
                 //Knock back enemy
                 if (comboCounter == 3)
-                    en.GetComponent<Rigidbody2D>().velocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
+                    knockbackVelocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
                 else
-                    en.GetComponent<Rigidbody2D>().velocity = (attackBoxPosition.position - en.transform.position) * 2;
+                    knockbackVelocity = (attackBoxPosition.position - en.transform.position) * attractionForce;
+                
+                en.TakeDamage(damage, comboCounter, knockbackVelocity);
+
             }
         }
     }
