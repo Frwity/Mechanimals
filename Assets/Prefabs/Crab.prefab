@@ -48,4 +48,4 @@ MonoBehaviour:
   range: 3
   attackSpeed: 0.5
   knockbackForce: 2
-  speed: 2
+  speed: 12
