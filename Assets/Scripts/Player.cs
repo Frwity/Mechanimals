@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     // Stats
     [SerializeField] int maxLife = 2;
     int life;
-    bool isAlive = true;
+    [HideInInspector] public bool isAlive = true;
 
     int comboCounter = 0;
 
