@@ -49,7 +49,7 @@ MonoBehaviour:
   attackSpeed: 0.5
   knockbackForce: 15
   specialKnockbackForce: 15
-  speed: 15
+  speed: 18
   specialCoolDown: 3
   specialDamage: 0
   specialSize: 15
