@@ -206,10 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ed9f7dd50eb6d4aaa70d02adcba5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   worldMananger: {fileID: 0}
   arena: {fileID: 0}
   attackCooldown: 1
-  damage: 1
+  damage: 3
   attackBoxPosition: {fileID: 2460852699784031824}
   attackBoxSize: {x: 0, y: 0}
   damageable:
@@ -220,4 +221,3 @@ MonoBehaviour:
   waitTime: 2
   range: 2
   timeToDie: 1
-  hasBeenTargeted: 0

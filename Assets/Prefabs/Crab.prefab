@@ -45,9 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperSprite: {fileID: 21300000, guid: 697d776f3fdf9d4408e9eb09532fb02a, type: 3}
   lowSprite: {fileID: 21300000, guid: c195c4362006faf4ba7e13cfb930e97e, type: 3}
-  range: 3
+  range: 5.5
   attackSpeed: 0.5
-  knockbackForce: 12
+  knockbackForce: 9
+  specialKnockbackForce: 5
   speed: 12
   specialCoolDown: 3
   specialDamage: 3
@@ -55,5 +56,5 @@ MonoBehaviour:
   missilePrefab: {fileID: 168275443498942924, guid: a9c542a4b95f325438e288d791b7b31c,
     type: 3}
   fireRate: 0.3
-  nbMissileFired: 10
+  nbMissileFired: 4
   missileSpeed: 10

@@ -29,8 +29,8 @@ public class WorldManager : MonoBehaviour
         foreach (GameObject scrollingZone in scrollingZones)
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
 
-        SummonNormalEnemyAt(transform.position + Vector3.right * 15);
-        SummonFlyingEnemyAt(transform.position + Vector3.right * 15);
+        //SummonNormalEnemyAt(transform.position + Vector3.right * 15);
+        //SummonFlyingEnemyAt(transform.position + Vector3.right * 15);
 
     }
 
@@ -99,6 +99,11 @@ public class WorldManager : MonoBehaviour
         Enemy enemy = Instantiate(enemyPrefabs[1], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
         enemy.worldMananger = this;
         enemy.arena = currentArena;
+        if (currentArena != null)
+        {
+            foreach (GameObject go in currentArena.waves[currentArena.currentWave].flyingPoint)
+                enemy.waypoints.Add(go);
+        }
     }
 
     public void SummonRandomEnemyAt(Vector3 pos)

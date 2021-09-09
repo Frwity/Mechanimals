@@ -10,7 +10,7 @@ public class CrabChara : AnimalChara
     Vector2 pos;
     float fireTimer = 0f;
     bool HasFired = false;
-
+    Player player;
     public override bool PerformSpecialAttack(Player player)
     {
         pos = player.transform.position;
@@ -25,8 +25,9 @@ public class CrabChara : AnimalChara
             return false;
         return true;
     }
-    public override void InitiateSpecialAttack(Player player)
+    public override void InitiateSpecialAttack(Player _player)
     {
+        player = _player;
         HasFired = false;
         fireTimer = nbMissileFired * fireRate;
     }
@@ -34,16 +35,8 @@ public class CrabChara : AnimalChara
     private void LaunchMissile()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject enemy = null;
-        foreach (GameObject go in enemies)
-        {
-            if (!go.GetComponent<Enemy>().hasBeenTargeted)
-            {
-                go.GetComponent<Enemy>().hasBeenTargeted = true;
-                enemy = go;
-                break;
-            }
-        }
+        GameObject enemy = enemies[Random.Range(0, enemies.Length)];
+
         if (enemy == null)
         {
             HasFired = true;
@@ -52,6 +45,6 @@ public class CrabChara : AnimalChara
         }
 
         Instantiate(missilePrefab, pos, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
-            (specialDamage, missileSpeed, enemy);
+            (specialDamage, missileSpeed, enemy, player.knockBackDirection * specialKnockbackForce);
     }
 }
