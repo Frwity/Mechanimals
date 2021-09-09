@@ -46,9 +46,9 @@ public class Player : MonoBehaviour
     Animator anim;
 
     // Stats
-    [SerializeField] int maxLife = 2;
-    int life;
-    [HideInInspector] public bool isAlive = true;
+    [SerializeField] public int maxLife = 2;
+    /*[HideInInspector]*/ public int life;
+    /*[HideInInspector]*/ public bool isAlive = true;
 
     int comboCounter = 0;
 
@@ -68,6 +68,8 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
+        if (!isAlive)
+            return;
         invulnerabilityTimer += Time.deltaTime;
         if (isAttacking)
         {
@@ -94,6 +96,8 @@ public class Player : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (!isAlive)
+            return;
         if (isMoving && !isSpecial)
         {
             if (moveInput.x <= 0f)
@@ -193,20 +197,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void RandomChangeBody() // goat bear crab
+    public Vector2 RandomChangeBody() // goat bear crab
     {
-        int upperNo = Random.Range(0, animals.Length);
-        int lowNo = (upperNo + Random.Range(1, animals.Length)) % animals.Length;
+        int lowNo = Random.Range(0, animals.Length);
+        int upperNo = (lowNo + Random.Range(1, animals.Length)) % animals.Length;
 
-        upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBodyChara.GetUpperSprite();
         lowBodyChara = animals[lowNo].GetComponent<AnimalChara>();
         transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBodyChara.GetLowSprite();
+        upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBodyChara.GetUpperSprite();
 
         if (lowNo == 0)
             specialBoxPosition.transform.localScale = new Vector3(1, 1);
         else if (lowNo == 1)
             specialBoxPosition.transform.localScale = new Vector3(lowBodyChara.GetSpecialSize(), 1);
+
+        return new Vector2(lowNo, upperNo);
     }
 
     private void CheckAttackCollision()
@@ -253,11 +259,19 @@ public class Player : MonoBehaviour
 
         //reset combo when hit
         comboCounter = 0;
+        GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
 
-        if (life == 0)
+        if (life <= 0)
+        {
             isAlive = false;
-        else
-            GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
+            Invoke("Die", 1f);
+        }
+    }
+
+    void Die()
+    {
+        if (!isAlive)
+            gameObject.SetActive(false);
     }
 
     private void OnDrawGizmos()

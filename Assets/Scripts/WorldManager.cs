@@ -42,8 +42,64 @@ public class WorldManager : MonoBehaviour
             camera.transform.position = Vector3.Lerp(camera.transform.position, currentArena.GetCameraPostion(), 0.01f);
         else if (currentScrollingZone)
             camera.transform.position = Vector3.Lerp(camera.transform.position,currentScrollingZone.GetCameraPostion(), 0.01f);
-    }
 
+
+        if (currentScrollingZone != null && player1 != null && player2 != null)
+        {
+            Player p1 = player1.GetComponent<Player>();
+            Player p2 = player2.GetComponent<Player>();
+
+            if (!p1.isAlive)
+            {
+                p1.rb.velocity = Vector2.zero;
+                player1.SetActive(true);
+                p1.life = p1.maxLife;
+                p1.isAlive = true;
+                p1.transform.position = camera.transform.position;
+            }
+            if (!p2.isAlive)
+            {
+                p2.rb.velocity = Vector2.zero;
+                player2.SetActive(true);
+                p2.life = p2.maxLife;
+                p2.isAlive = true;
+                p2.transform.position = camera.transform.position;
+            }
+        }
+        if (currentArena != null && player1 != null && player2 != null)
+        {
+            Player p1 = player1.GetComponent<Player>();
+            Player p2 = player2.GetComponent<Player>();
+
+            if (!p1.isAlive && !p2.isAlive)
+            {
+                p1.rb.velocity = Vector2.zero;
+                p1.life = p1.maxLife;
+                p1.isAlive = true;
+                p1.transform.position = transform.position;
+                player1.SetActive(true);
+                p2.rb.velocity = Vector2.zero;
+                p2.life = p2.maxLife;
+                p2.isAlive = true;
+                p2.transform.position = transform.position;
+                player2.SetActive(true);
+
+                foreach (GameObject arena in arenas)
+                    arena.GetComponent<Arena>().ResetArena();
+                foreach (GameObject scrollingZone in scrollingZones)
+                    scrollingZone.GetComponent<ScrollingZone>().ResetScrollingZone();
+
+                p1.RandomChangeBody();
+                p2.RandomChangeBody();
+
+                Enemy[] enemies = FindObjectsOfType<Enemy>();
+                foreach (Enemy en in enemies)
+                    Destroy(en.gameObject);
+
+                currentArena = null;
+            }
+        }
+    }
     public void AssignSpawningPlayer(PlayerInput playerInput)
     {
         if (player1 == null)
@@ -62,11 +118,41 @@ public class WorldManager : MonoBehaviour
         firstDoor.SetActive(false);
     }
 
+    public void RespawnPlayerIfDead()
+    {
+        if (player1 != null && player2 != null)
+        {
+            Player p1 = player1.GetComponent<Player>();
+            Player p2 = player2.GetComponent<Player>();
+
+            if (!p1.isAlive)
+            {
+                p1.rb.velocity = Vector2.zero;
+                player1.SetActive(true);
+                p1.life = p1.maxLife;
+                p1.isAlive = true;
+                p1.transform.position = camera.transform.position;
+            }
+            if (!p2.isAlive)
+            {
+                p2.rb.velocity = Vector2.zero;
+                player2.SetActive(true);
+                p2.life = p2.maxLife;
+                p2.isAlive = true;
+                p2.transform.position = camera.transform.position;
+            }
+        }
+    }
     public GameObject GetClosestPlayer(Vector3 pos)
     {
         if (player1 == null)
             return null;
         if (player2 == null)
+            return player1;
+
+        if (!player1.GetComponent<Player>().isAlive)
+            return player2;
+        if (!player2.GetComponent<Player>().isAlive)
             return player1;
 
         if ((player1.transform.position - pos).magnitude < (player2.transform.position - pos).magnitude)
@@ -81,6 +167,12 @@ public class WorldManager : MonoBehaviour
             return null;
         if (player2 == null)
             return player1;
+
+        if (!player1.GetComponent<Player>().isAlive)
+            return player2;
+        if (!player2.GetComponent<Player>().isAlive)
+            return player1;
+
         if (Random.Range(0, 101) % 2 == 0)
             return player1;
         else
