@@ -291,15 +291,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.35
         value: {x: -8.880842, y: 13.385934, z: 119.2236}
-        inSlope: {x: 1.7382464, y: 6.4524736, z: 0}
-        outSlope: {x: 1.7382464, y: 6.4524736, z: 0}
+        inSlope: {x: 2.192186, y: 0, z: 0}
+        outSlope: {x: 2.192186, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.5833333
-        value: {x: -8.358159, y: 15.991938, z: 119.2236}
+        value: {x: -8.093361, y: 12.7481575, z: 119.2236}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -541,15 +541,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.35
         value: -8.880842
-        inSlope: 1.7382464
-        outSlope: 1.7382464
+        inSlope: 2.192186
+        outSlope: 2.192186
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5833333
-        value: -8.358159
+        value: -8.093361
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -578,15 +578,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.35
         value: 13.385934
-        inSlope: 6.4524736
-        outSlope: 6.4524736
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5833333
-        value: 15.991938
+        value: 12.7481575
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1815,6 +1815,36 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
+    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
     path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
@@ -2016,36 +2046,6 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
     path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_10/bone_11/bone_12/bone_13/bone_15
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: gameweek2021_cleanGoatBotRig/bone_1/bone_2/bone_3/bone_4
     classID: 4
     script: {fileID: 0}
   - curve:
