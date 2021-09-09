@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         isMoving = !context.canceled;
+        upperBodyAnimator.SetBool("IsMoving", isMoving);
         lowerBodyAnimator.SetBool("IsMoving", isMoving);
     }
 
@@ -138,7 +139,10 @@ public class Player : MonoBehaviour
             isGrounded = false;
             upperBodyAnimator.SetBool("IsJumping", true);
             upperBodyAnimator.SetBool("IsGrounded", isGrounded);
+            lowerBodyAnimator.SetTrigger("Jump");
             lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
+            upperBodyAnimator.SetBool("IsMoving", false);
+            lowerBodyAnimator.SetBool("IsMoving", false);
         }
     }
 
@@ -163,6 +167,9 @@ public class Player : MonoBehaviour
                 comboTimer = 0.0f;
                 upperBodyAnimator.SetBool("IsAttacking", isAttacking);
                 upperBodyAnimator.SetInteger("NumCombo", comboCounter);
+                lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
+                upperBodyAnimator.SetBool("IsMoving", false);
+                lowerBodyAnimator.SetBool("IsMoving", false);
                 //TODO Check collision with animation event ?
                 CheckAttackCollision();
             }
@@ -184,6 +191,8 @@ public class Player : MonoBehaviour
         {
             specialTimer = 0f;
             isSpecial = true;
+            upperBodyAnimator.SetTrigger("SpecialAttack");
+            lowerBodyAnimator.SetTrigger("SpecialAttack");
             lowBodyChara.InitiateSpecialAttack(this);
         }
     }
@@ -249,7 +258,6 @@ public class Player : MonoBehaviour
                     knockbackVelocity = (attackBoxPosition.position - en.transform.position) * attractionForce;
                 
                 en.TakeDamage(damage, comboCounter, knockbackVelocity);
-
             }
         }
     }
@@ -263,6 +271,7 @@ public class Player : MonoBehaviour
         rb.simulated = true;
         rb.velocity = Vector2.zero;
         upperBodyAnimator.SetBool("IsAttacking", isAttacking);
+        lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
     }
 
     public void TakeDamage(int damage)
@@ -271,7 +280,10 @@ public class Player : MonoBehaviour
 
         //reset combo when hit
         comboCounter = 0;
-        
+
+        upperBodyAnimator.SetTrigger("Hit");
+        lowerBodyAnimator.SetTrigger("Hit");
+
         if (life == 0)
             isAlive = false;
     }
