@@ -7,13 +7,13 @@ public class Wall : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             //bounce back enemy
-            Enemy en = collision.gameObject.GetComponent<Enemy>();
+           /* Enemy en = collision.gameObject.GetComponent<Enemy>();
 
             if(en)
             {
                 Rigidbody2D rb = en.GetComponent<Rigidbody2D>();
                 rb.velocity = new Vector2(-rb.velocity.x, rb.velocity.y);
-            }
+            }*/
         }
     }
 }
