@@ -24,7 +24,7 @@ public class EnemyMissile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().TakeDamage(damage, transform.position.x < collision.transform.position.x ? knockback : new Vector2(-knockback.x, knockback.y));
+            collision.GetComponent<Player>().TakeDamage(damage, knockback);
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Wall") || collision.CompareTag("Ground"))

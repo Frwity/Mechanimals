@@ -11923,6 +11923,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8306029065166875729, guid: 56190b70cdedf784686b8a200e3f5c94,
         type: 3}
+      propertyPath: waves.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8306029065166875729, guid: 56190b70cdedf784686b8a200e3f5c94,
+        type: 3}
       propertyPath: enemySpawnPoint.Array.size
       value: 1
       objectReference: {fileID: 0}
