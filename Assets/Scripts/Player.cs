@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
 
     public void OnSpecial(CallbackContext context)
     {
-        if (specialTimer >= upperBodyChara.GetSpecialCoolDown() && !isSpecial && context.started)
+        if (specialTimer >= lowBodyChara.GetSpecialCoolDown() && !isSpecial && context.started)
         {
             specialTimer = 0f;
             isSpecial = true;
