@@ -34,7 +34,7 @@ public class PlayerMissile : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage, 3, knockback);
+            collision.GetComponent<Enemy>().TakeDamage(damage, 3, transform.position.x < collision.transform.position.x ? knockback : new Vector2(-knockback.x, knockback.y));
             Destroy(gameObject);
         }
     }

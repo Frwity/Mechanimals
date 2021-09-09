@@ -35,6 +35,8 @@ public class CrabChara : AnimalChara
     private void LaunchMissile()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length <= 0)
+            return;
         GameObject enemy = enemies[Random.Range(0, enemies.Length)];
 
         if (enemy == null)
@@ -45,6 +47,6 @@ public class CrabChara : AnimalChara
         }
 
         Instantiate(missilePrefab, pos, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
-            (specialDamage, missileSpeed, enemy, (transform.position.x < enemy.transform.position.x ? player.knockBackDirection : new Vector2(-player.knockBackDirection.x, player.knockBackDirection.y)) * specialKnockbackForce);
+            (specialDamage, missileSpeed, enemy, player.knockBackDirection * specialKnockbackForce);
     }
 }

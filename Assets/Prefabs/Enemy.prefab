@@ -100,7 +100,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 6165420679734019471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 8780137887571287540}
   - {fileID: 2460852699784031824}
@@ -166,7 +166,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 40a2374c978e59e43a6eea080f79d32f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &6165420679734019470
 BoxCollider2D:
@@ -206,18 +206,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ed9f7dd50eb6d4aaa70d02adcba5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   worldMananger: {fileID: 0}
   arena: {fileID: 0}
   attackCooldown: 1
-  damage: 1
+  damage: 3
   attackBoxPosition: {fileID: 2460852699784031824}
   attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 0
-  maxlife: 20
-  speed: 3
+    m_Bits: 64
+  maxlife: 6
+  speed: 10
   waitTime: 2
-  range: 2
+  range: 3.5
   timeToDie: 1
-  hasBeenTargeted: 0
+  knockBackDirection: {x: 3, y: 1}
+  knockbackForce: 5

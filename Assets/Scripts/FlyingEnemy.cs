@@ -8,7 +8,7 @@ public class FlyingEnemy : Enemy
     [SerializeField] float missileSpeed = 3f;
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float timeBeforeReFlying = 1.0f;
-    float flyingTimer= 0.0f;
+    float flyingTimer = 0.0f;
     bool isFlying = true;
     bool asReachTargetWaypoint = true;
     Vector3 waypointTarget;
@@ -34,6 +34,7 @@ public class FlyingEnemy : Enemy
             {
                 isFlying = true;
                 flyingTimer = 0.0f;
+                GetComponent<Rigidbody2D>().gravityScale = 0f;
             }
             else
                 return;
@@ -66,9 +67,7 @@ public class FlyingEnemy : Enemy
             {
                 isWaiting = false;
                 waitTimer = 0.0f;
-                Debug.Log(waypointNo);
                 waypointNo = (waypointNo + Random.Range(0, waypoints.Count)) % waypoints.Count;
-                Debug.Log(waypointNo);
                 waypointTarget = waypoints[waypointNo].transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 target = null;
                 asReachTargetWaypoint = false;
@@ -92,7 +91,7 @@ public class FlyingEnemy : Enemy
 
     }
 
-    public override void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
+    public override void TakeDamage(int damage, int comboNum, Vector3 knockbackVelocity)
     {
         base.TakeDamage(damage, comboNum, knockbackVelocity);
         GetComponent<Rigidbody2D>().gravityScale = 1f;
@@ -101,6 +100,6 @@ public class FlyingEnemy : Enemy
     private void LaunchMissile()
     {
         Instantiate(missilePrefab, transform.position, Quaternion.identity).GetComponent<EnemyMissile>().InitiateMissile
-            (damage, missileSpeed, (target.transform.position - transform.position).normalized);
+            (damage, missileSpeed, (target.transform.position - transform.position).normalized, knockBackDirection * knockbackForce);
     }
 }

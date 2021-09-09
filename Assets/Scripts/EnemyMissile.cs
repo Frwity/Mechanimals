@@ -7,6 +7,7 @@ public class EnemyMissile : MonoBehaviour
     int damage = 1;
     float speed = 3;
     Vector2 direction;
+    Vector2 knockback;
 
     float timer = 0;
 
@@ -23,17 +24,18 @@ public class EnemyMissile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>().TakeDamage(damage);
+            collision.GetComponent<Player>().TakeDamage(damage, transform.position.x < collision.transform.position.x ? knockback : new Vector2(-knockback.x, knockback.y));
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Wall") || collision.CompareTag("Ground"))
             Destroy(gameObject);
     }
 
-    public void InitiateMissile(int _damage, float _speed, Vector2 _direction)
+    public void InitiateMissile(int _damage, float _speed, Vector2 _direction, Vector2 _knockback)
     {
         damage = _damage;
         speed = _speed;
         direction = _direction;
+        knockback = _knockback;
     }
 }
