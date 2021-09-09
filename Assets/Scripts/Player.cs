@@ -49,9 +49,9 @@ public class Player : MonoBehaviour
     Animator lowerBodyAnimator;
 
     // Stats
-    [SerializeField] int maxLife = 2;
-    int life;
-    bool isAlive = true;
+    [SerializeField] public int maxLife = 2;
+    public int life;
+    public bool isAlive = true;
 
     int comboCounter = 0;
 
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void RandomChangeBody() // goat bear crab
+    public void RandomChangeBody() // goat bear crab
     {
         if (upperBody != null)
             GameObject.Destroy(upperBody);

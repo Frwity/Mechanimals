@@ -128,7 +128,7 @@ public class Enemy : MonoBehaviour
             Player p = player.gameObject.GetComponent<Player>();
 
             if (p)
-                p.TakeDamage(damage, knockbackVelocity);
+                p.TakeDamage(damage);
         }
     }
 
