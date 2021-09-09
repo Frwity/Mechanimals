@@ -40,11 +40,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Vector2 knockBackDirection;
     [SerializeField] protected float knockbackForce;
 
+    //Animation
+    Animator anim;
+
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         life = maxlife;
         target = worldMananger.GetClosestPlayer(transform.position);
+        anim = GetComponentInChildren<Animator>();
     }
 
     public virtual void Update()
@@ -77,6 +81,7 @@ public class Enemy : MonoBehaviour
         }
         else if (isWaiting)
         {
+            anim.SetBool("IsMoving", false);
             waitTimer += Time.deltaTime;
             if (waitTimer >= waitTime)
             {
@@ -87,6 +92,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            anim.SetBool("IsMoving", true);
             if (target.transform.position.x < transform.position.x)
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             else
@@ -108,6 +114,8 @@ public class Enemy : MonoBehaviour
     {
         life = Mathf.Clamp(life, 0, life - damage);
         GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
+        anim.SetBool("IsMoving", false);
+        anim.SetTrigger("Hit");
         if (life == 0)
         {
             if (arena)
@@ -121,6 +129,8 @@ public class Enemy : MonoBehaviour
         if (!isAlive)
             return;
         Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
+        anim.SetBool("IsMoving", false);
+        anim.SetTrigger("Attack");
 
         foreach (Collider2D player in collidePlayers)
         {
@@ -142,6 +152,9 @@ public class Enemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
         {
+            if (rb == null)
+                return;
+
             rb.velocity = Vector3.zero;
             rb.sharedMaterial.bounciness = 0f;
         }
@@ -150,6 +163,9 @@ public class Enemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
         {
+            if (rb == null)
+                return;
+
             rb.sharedMaterial.bounciness = 0.5f;
         }
     }
