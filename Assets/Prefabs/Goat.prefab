@@ -48,7 +48,7 @@ MonoBehaviour:
   range: 3.5
   attackSpeed: 0.5
   knockbackForce: 12
-  specialKnockbackForce: 80000
+  specialKnockbackForce: 10
   speed: 18
   specialCoolDown: 1
   specialDamage: 3
