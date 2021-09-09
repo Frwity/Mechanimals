@@ -148,6 +148,17 @@
                 },
                 {
                     "name": "",
+                    "id": "56ea255b-709e-4702-bc38-2e9afbfe6ad8",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bd686cd9-2575-4ad9-8b10-d2b42ac93d21",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -165,6 +176,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "973b018b-1d6e-404f-92bd-edc778297121",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc67f761-3736-46b2-b547-cd5376a7db15",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

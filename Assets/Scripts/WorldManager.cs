@@ -21,6 +21,8 @@ public class WorldManager : MonoBehaviour
 
     [SerializeField] new Camera camera = null;
 
+    private Vector2 p1body;
+
     public void Start()
     {
         firstDoor.SetActive(true);
@@ -29,7 +31,7 @@ public class WorldManager : MonoBehaviour
         foreach (GameObject scrollingZone in scrollingZones)
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
 
-        SummonNormalEnemyAt(transform.position + Vector3.right * 15);
+        //SummonNormalEnemyAt(transform.position + Vector3.right * 15);
         //SummonFlyingEnemyAt(transform.position + Vector3.right * 15);
 
     }
@@ -89,8 +91,9 @@ public class WorldManager : MonoBehaviour
                 foreach (GameObject scrollingZone in scrollingZones)
                     scrollingZone.GetComponent<ScrollingZone>().ResetScrollingZone();
 
-                p1.RandomChangeBody();
-                p2.RandomChangeBody();
+                int r = Random.Range(0, 3);
+                Vector2 p1body = p1.RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
+                p2.RandomChangeBody((int)p1body.x, (int)p1body.y);
 
                 Enemy[] enemies = FindObjectsOfType<Enemy>();
                 foreach (Enemy en in enemies)
@@ -106,6 +109,8 @@ public class WorldManager : MonoBehaviour
         {
             player1 = playerInput.gameObject;
             player1.transform.position = transform.position;
+            int r = Random.Range(0, 3);
+            p1body = player1.GetComponent<Player>().RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
             return;
         }
 
@@ -113,6 +118,7 @@ public class WorldManager : MonoBehaviour
         {
             player2 = playerInput.gameObject;
             player2.transform.position = transform.position;
+            player1.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
         }
 
         firstDoor.SetActive(false);

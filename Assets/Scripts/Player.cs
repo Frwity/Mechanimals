@@ -60,7 +60,6 @@ public class Player : MonoBehaviour
     {
         life = maxLife;
         rb = GetComponent<Rigidbody2D>();
-        RandomChangeBody();
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
@@ -187,7 +186,8 @@ public class Player : MonoBehaviour
     {
         if (context.started)
         {
-            RandomChangeBody();
+            int r = Random.Range(0, animals.Length);
+            RandomChangeBody(r, (r + Random.Range(1, animals.Length)) % animals.Length);
             attackBoxSize.x = upperBodyChara.GetRange();
         }
     }
@@ -218,26 +218,28 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Vector2 RandomChangeBody() // goat bear crab
+    public Vector2 RandomChangeBody(int x, int y) // goat bear crab
     {
         if (upperBody != null)
-            GameObject.Destroy(upperBody);
+            Destroy(upperBody);
 
         if (lowerBody != null)
-            GameObject.Destroy(lowerBody);
+            Destroy(lowerBody);
 
-        int lowNo = Random.Range(0, animals.Length);
-        int upperNo = (lowNo + Random.Range(1, animals.Length)) % animals.Length;
+        //int lowNo = Random.Range(0, animals.Length);
+        //int upperNo = (lowNo + Random.Range(1, animals.Length)) % animals.Length;
+        int lowNo = (++x) % animals.Length;
+        int upperNo = (++y) % animals.Length;
 
         //Upper Body setup
         upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
-        upperBody = GameObject.Instantiate(upperBodyChara.GetUpperSprite(), transform.GetChild(0).position, Quaternion.identity);
+        upperBody = Instantiate(upperBodyChara.GetUpperSprite(), transform.GetChild(0).position, Quaternion.identity);
         upperBody.transform.parent = transform;
         upperBodyAnimator = upperBody.GetComponent<Animator>();
 
         //Lower body setup
         lowBodyChara = animals[lowNo].GetComponent<AnimalChara>();
-        lowerBody = GameObject.Instantiate(lowBodyChara.GetLowSprite(), transform.GetChild(1).position, Quaternion.identity);
+        lowerBody = Instantiate(lowBodyChara.GetLowSprite(), transform.GetChild(1).position, Quaternion.identity);
         lowerBody.transform.parent = transform;
         lowerBodyAnimator = lowerBody.GetComponent<Animator>();
 

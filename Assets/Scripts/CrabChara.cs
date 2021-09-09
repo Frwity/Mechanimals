@@ -22,12 +22,16 @@ public class CrabChara : AnimalChara
             HasFired = true;
         }
         if (fireTimer < 0f)
+        {
+            player.GetComponent<Rigidbody2D>().simulated = true;
             return false;
+        }
         return true;
     }
     public override void InitiateSpecialAttack(Player _player)
     {
         player = _player;
+        player.GetComponent<Rigidbody2D>().simulated = false;
         HasFired = false;
         fireTimer = nbMissileFired * fireRate;
     }
