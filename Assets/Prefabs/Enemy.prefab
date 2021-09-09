@@ -215,11 +215,11 @@ MonoBehaviour:
   attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   maxlife: 6
   speed: 10
   waitTime: 2
-  range: 2
+  range: 3.5
   timeToDie: 1
-  knockBackDirection: {x: 0, y: 0}
-  knockbackForce: 0
+  knockBackDirection: {x: 3, y: 1}
+  knockbackForce: 5
