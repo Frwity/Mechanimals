@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject, timeToDie);
             return;
         }
-        if (target == null)
+        if (target == null || !target.GetComponent<Player>().isAlive)
         {
             target = worldMananger.GetClosestPlayer(transform.position);
             return;

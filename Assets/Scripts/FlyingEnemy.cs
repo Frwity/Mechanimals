@@ -8,7 +8,7 @@ public class FlyingEnemy : Enemy
     [SerializeField] float missileSpeed = 3f;
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float timeBeforeReFlying = 1.0f;
-    float flyingTimer= 0.0f;
+    float flyingTimer = 0.0f;
     bool isFlying = true;
     bool asReachTargetWaypoint = true;
     Vector3 waypointTarget;
@@ -34,6 +34,7 @@ public class FlyingEnemy : Enemy
             {
                 isFlying = true;
                 flyingTimer = 0.0f;
+                GetComponent<Rigidbody2D>().gravityScale = 0f;
             }
             else
                 return;
