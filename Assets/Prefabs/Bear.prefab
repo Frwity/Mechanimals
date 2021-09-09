@@ -45,9 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upperSprite: {fileID: 21300000, guid: 3af7343f87b21c04a8c45b84e0298980, type: 3}
   lowSprite: {fileID: 21300000, guid: e1ab2d6aad8611944a5078447b6f9855, type: 3}
-  range: 2
+  range: 4.5
   attackSpeed: 0.5
   knockbackForce: 15
+  specialKnockbackForce: 1
   speed: 15
   specialCoolDown: 3
   specialDamage: 3
