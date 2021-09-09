@@ -103,16 +103,18 @@ MonoBehaviour:
   damageable:
     serializedVersion: 2
     m_Bits: 0
-  maxlife: 80
+  maxlife: 3
+  life: 0
   speed: 3
   waitTime: 1
   range: 2
+  stunTime: 1
   timeToDie: 1
   knockBackDirection: {x: 3, y: 1}
   knockbackForce: 5
   missilePrefab: {fileID: 168275443498942924, guid: ff77501a014bd5142ae67629b42db0af,
     type: 3}
-  missileSpeed: 5
+  missileSpeed: 8
   fireRate: 0.3
   timeBeforeReFlying: 1
   waypointNo: 0

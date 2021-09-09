@@ -269,7 +269,10 @@ MonoBehaviour:
   comboUptime: 2
   knockBackDirection: {x: 3, y: 1}
   attractionForce: 2
-  maxLife: 10
+  invulnerabilityTime: 1
+  maxLife: 50
+  life: 0
+  isAlive: 1
 --- !u!114 &4464289495205428773
 MonoBehaviour:
   m_ObjectHideFlags: 0
