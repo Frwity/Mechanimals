@@ -17,13 +17,13 @@ public class Enemy : MonoBehaviour
     // Stats
 
     [SerializeField] protected int maxlife = 6;
-    protected int life;
+    [HideInInspector] public int life;
     protected bool isAlive = true;
 
     // Movement
 
     [SerializeField] protected float speed = 3f;
-    Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     //Combat
 
@@ -35,10 +35,21 @@ public class Enemy : MonoBehaviour
     protected float attackTimer = 0.0f;
     protected bool isAttacking = false;
     [SerializeField] float range = 4.0f;
+
+    [SerializeField] float stunTime = 1.0f;
+    float stunTimer = 0.0f;
     [SerializeField] protected float timeToDie = 1f;
 
     [SerializeField] protected Vector2 knockBackDirection;
     [SerializeField] protected float knockbackForce;
+
+
+    protected bool isHit = false;
+
+    public void Awake()
+    {
+        waypoints = new List<GameObject>();
+    }
 
     public virtual void Start()
     {
@@ -53,6 +64,17 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject, timeToDie);
             return;
+        }
+        if (isHit)
+        {
+            stunTimer += Time.deltaTime;
+            if (stunTimer >= stunTime)
+            {
+                isHit = false;
+                stunTimer = 0.0f;
+            }
+            else
+                return;
         }
         if (target == null || !target.GetComponent<Player>().isAlive)
         {
@@ -92,10 +114,14 @@ public class Enemy : MonoBehaviour
             else
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-            int layerMask = 1 << 7; // enemy
-            layerMask |= (1 << 8); // player
-            layerMask |= (1 << 9); // Wall
+            int layerMask = 1 << 3; // wall
+            layerMask |= (1 << 6); // player
+            layerMask |= (1 << 7); // enemy
+            layerMask |= (1 << 8); // flyningenemy
+            layerMask |= (1 << 9); // border
+
             layerMask = ~layerMask;
+
             if (Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y, layerMask))
                 transform.Translate(speed * Time.deltaTime, 0f, 0f);
             else
@@ -113,6 +139,8 @@ public class Enemy : MonoBehaviour
                 arena.AddEnemyKill();
             isAlive = false;
         }
+        else
+            isHit = true;
     }
 
     private void Attack()

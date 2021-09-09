@@ -9,12 +9,9 @@ public class FlyingEnemy : Enemy
     [SerializeField] float fireRate = 0.3f;
     [SerializeField] float timeBeforeReFlying = 1.0f;
     float flyingTimer = 0.0f;
-    bool isFlying = true;
     bool asReachTargetWaypoint = true;
     Vector3 waypointTarget;
     [HideInInspector] public int waypointNo = 0;
-
-    Rigidbody2D rb;
 
     public override void Start()
     {
@@ -29,12 +26,12 @@ public class FlyingEnemy : Enemy
             Destroy(gameObject, timeToDie);
             return;
         }
-        if (!isFlying)
+        if (isHit)
         {
             flyingTimer += Time.deltaTime;
             if (flyingTimer >= timeBeforeReFlying)
             {
-                isFlying = true;
+                isHit = false;
                 flyingTimer = 0.0f;
             }
             else
@@ -74,8 +71,11 @@ public class FlyingEnemy : Enemy
             {
                 isWaiting = false;
                 waitTimer = 0.0f;
-                waypointNo = (waypointNo + Random.Range(0, waypoints.Count)) % waypoints.Count;
-                waypointTarget = waypoints[waypointNo].transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                if (waypoints.Count > 0)
+                {
+                    waypointNo = (waypointNo + Random.Range(0, waypoints.Count)) % waypoints.Count;
+                    waypointTarget = waypoints[waypointNo].transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                }
                 target = null;
                 asReachTargetWaypoint = false;
             }
@@ -102,7 +102,6 @@ public class FlyingEnemy : Enemy
     {
         base.TakeDamage(damage, comboNum, knockbackVelocity);
         GetComponent<Rigidbody2D>().gravityScale = 1f;
-        isFlying = false;
     }
 
     private void LaunchMissile()
