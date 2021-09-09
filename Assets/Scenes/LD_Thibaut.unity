@@ -8330,6 +8330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
         type: 3}
+      propertyPath: nextScrollingZone
+      value: 
+      objectReference: {fileID: 1854688513}
+    - target: {fileID: 3256675680670578375, guid: a3280dd0e31c5134fbcb92252a6a1924,
+        type: 3}
       propertyPath: waves.Array.data[0].flyingPoint.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -20756,7 +20761,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8669909172041102505, guid: ac965d158859eaf42933b1d9cd271ac7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ac965d158859eaf42933b1d9cd271ac7, type: 3}
 --- !u!20 &1202263640 stripped
 Camera:
