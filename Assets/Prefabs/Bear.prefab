@@ -48,11 +48,11 @@ MonoBehaviour:
   range: 4.5
   attackSpeed: 0.5
   knockbackForce: 15
-  specialKnockbackForce: 1
+  specialKnockbackForce: 15
   speed: 15
   specialCoolDown: 3
-  specialDamage: 3
-  specialSize: 10
+  specialDamage: 0
+  specialSize: 15
   missilePrefab: {fileID: 0}
   jumpUpForce: 25
   jumpDownForce: 70

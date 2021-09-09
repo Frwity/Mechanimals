@@ -217,7 +217,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   maxlife: 6
-  speed: 3
+  speed: 10
   waitTime: 2
   range: 2
   timeToDie: 1
+  knockBackDirection: {x: 0, y: 0}
+  knockbackForce: 0
