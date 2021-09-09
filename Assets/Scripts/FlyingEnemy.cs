@@ -66,9 +66,7 @@ public class FlyingEnemy : Enemy
             {
                 isWaiting = false;
                 waitTimer = 0.0f;
-                Debug.Log(waypointNo);
                 waypointNo = (waypointNo + Random.Range(0, waypoints.Count)) % waypoints.Count;
-                Debug.Log(waypointNo);
                 waypointTarget = waypoints[waypointNo].transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
                 target = null;
                 asReachTargetWaypoint = false;
@@ -101,6 +99,6 @@ public class FlyingEnemy : Enemy
     private void LaunchMissile()
     {
         Instantiate(missilePrefab, transform.position, Quaternion.identity).GetComponent<EnemyMissile>().InitiateMissile
-            (damage, missileSpeed, (target.transform.position - transform.position).normalized);
+            (damage, missileSpeed, (target.transform.position - transform.position).normalized, knockBackDirection * knockbackForce);
     }
 }

@@ -45,6 +45,6 @@ public class CrabChara : AnimalChara
         }
 
         Instantiate(missilePrefab, pos, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
-            (specialDamage, missileSpeed, enemy, (transform.position.x < enemy.transform.position.x ? player.knockBackDirection : new Vector2(-player.knockBackDirection.x, player.knockBackDirection.y)) * specialKnockbackForce);
+            (specialDamage, missileSpeed, enemy, player.knockBackDirection * specialKnockbackForce);
     }
 }
