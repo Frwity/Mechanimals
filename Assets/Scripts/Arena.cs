@@ -93,6 +93,7 @@ public class Arena : MonoBehaviour
                     if (currentWave >= waves.Length)
                     {
                         worldMananger.currentArena = null;
+                        worldMananger.RespawnPlayerIfDead();
                         isFighting = false;
                         secondDoor.SetActive(false);
                         return;
@@ -112,5 +113,16 @@ public class Arena : MonoBehaviour
     public Vector3 GetCameraPostion()
     {
         return cameraAnchor.transform.position;
+    }
+
+    public void ResetArena()
+    {
+        timerBetweenWaves = 0f;
+        isWaveFinished = false;
+        isWaveFinishedSpawning = false;
+
+        currentWave = 0;
+        currentEnemykilled = 0;
+        firstDoor.SetActive(false);
     }
 }

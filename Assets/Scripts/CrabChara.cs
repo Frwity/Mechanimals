@@ -35,6 +35,8 @@ public class CrabChara : AnimalChara
     private void LaunchMissile()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies.Length <= 0)
+            return;
         GameObject enemy = enemies[Random.Range(0, enemies.Length)];
 
         if (enemy == null)

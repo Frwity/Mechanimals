@@ -38,4 +38,9 @@ public class ScrollingZone : MonoBehaviour
     {
         return Vector3.Lerp(cameraAnchor1.transform.position, cameraAnchor2.transform.position, cameraLerpPos);
     }
+
+    public void ResetScrollingZone()
+    {
+        isFighting = false;
+    }
 }

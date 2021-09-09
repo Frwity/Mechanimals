@@ -135,7 +135,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 40a2374c978e59e43a6eea080f79d32f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &6165420679734019470
 BoxCollider2D:
@@ -185,13 +185,13 @@ MonoBehaviour:
   damageable:
     serializedVersion: 2
     m_Bits: 0
-  maxlife: 3
+  maxlife: 80
   speed: 3
   waitTime: 1
-  range: 4
+  range: 2
   timeToDie: 1
   knockBackDirection: {x: 3, y: 1}
-  knockbackForce: 3
+  knockbackForce: 5
   missilePrefab: {fileID: 168275443498942924, guid: ff77501a014bd5142ae67629b42db0af,
     type: 3}
   missileSpeed: 5
