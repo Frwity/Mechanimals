@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5856069325999842757}
   - component: {fileID: 6165420679734019470}
   - component: {fileID: 8871202054954631188}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: FlyingEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 6165420679734019471}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 328f4cd65895cd848bb6e36b9c7da53c, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   maxlife: 3
   speed: 15
   waitTime: 1

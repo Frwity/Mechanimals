@@ -296,7 +296,7 @@ MonoBehaviour:
   attackBoxSize: {x: 0, y: 2}
   damageable:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   damage: 1
   maxCombo: 3
   comboUptime: 2

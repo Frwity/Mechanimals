@@ -14,10 +14,12 @@ public class FlyingEnemy : Enemy
     Vector3 waypointTarget;
     [HideInInspector] public int waypointNo = 0;
 
+    Rigidbody2D rb;
+
     public override void Start()
     {
         base.Start();
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public override void Update()
@@ -34,11 +36,16 @@ public class FlyingEnemy : Enemy
             {
                 isFlying = true;
                 flyingTimer = 0.0f;
-                GetComponent<Rigidbody2D>().gravityScale = 0f;
             }
             else
                 return;
         }
+        else
+        {
+            rb.gravityScale = 0f;
+            rb.velocity = Vector2.zero;
+        }
+
         if (target == null)
         {
             target = worldMananger.GetRandomPlayer(transform.position);
@@ -95,6 +102,7 @@ public class FlyingEnemy : Enemy
     {
         base.TakeDamage(damage, comboNum, knockbackVelocity);
         GetComponent<Rigidbody2D>().gravityScale = 1f;
+        isFlying = false;
     }
 
     private void LaunchMissile()

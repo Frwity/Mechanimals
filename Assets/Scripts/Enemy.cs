@@ -85,22 +85,21 @@ public class Enemy : MonoBehaviour
                 target = worldMananger.GetClosestPlayer(transform.position);
             }
         }
-        else
+        else // movement
         {
             if (target.transform.position.x < transform.position.x)
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             else
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-            int layerMask = 1 << 6; // player
-            layerMask = 1 << 7; // enemy
-            layerMask = 1 << 9; // Wall
+            int layerMask = 1 << 7; // enemy
+            layerMask |= (1 << 8); // player
+            layerMask |= (1 << 9); // Wall
             layerMask = ~layerMask;
-
             if (Physics2D.Raycast(transform.position, Vector2.down, transform.localScale.y, layerMask))
                 transform.Translate(speed * Time.deltaTime, 0f, 0f);
             else
-                transform.Translate(-speed * 3f * Time.deltaTime, 0f, 0f);
+                transform.Translate(-speed * 1.5f * Time.deltaTime, 0f, 0f);
         }
     }
 
