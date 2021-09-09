@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class AnimalChara : MonoBehaviour
 {
-    [SerializeField] Sprite upperSprite;
-    [SerializeField] Sprite lowSprite;
+    //[SerializeField] Sprite upperSprite;
+    //[SerializeField] Sprite lowSprite;
+
+    [SerializeField] GameObject upperSprite;
+    [SerializeField] GameObject lowSprite;
 
     [SerializeField] protected float range = 1f;
     [SerializeField] protected float attackSpeed = 0.5f;
@@ -18,8 +21,8 @@ public class AnimalChara : MonoBehaviour
     [SerializeField] protected GameObject missilePrefab;
 
 
-    public Sprite GetUpperSprite() { return upperSprite; }
-    public Sprite GetLowSprite() { return lowSprite; }
+    public GameObject GetUpperSprite() { return upperSprite; }
+    public GameObject GetLowSprite() { return lowSprite; }
 
     public float GetRange() { return range; }
     public float GetAttackSpeed() { return attackSpeed; }

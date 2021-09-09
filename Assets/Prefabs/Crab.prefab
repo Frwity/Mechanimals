@@ -43,18 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e52ce9dd05a9b540b04a40a98ce8de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperSprite: {fileID: 21300000, guid: 697d776f3fdf9d4408e9eb09532fb02a, type: 3}
-  lowSprite: {fileID: 21300000, guid: c195c4362006faf4ba7e13cfb930e97e, type: 3}
-  range: 5.5
+  upperSprite: {fileID: 7897678950188909682, guid: 2d53141a12a38d94da29ad527f6a7aa4,
+    type: 3}
+  lowSprite: {fileID: 6586251041953643386, guid: db780197c4facbe43adc3d471d293bdf,
+    type: 3}
+  range: 3
   attackSpeed: 0.5
   knockbackForce: 9
-  specialKnockbackForce: 5
-  speed: 15
+  specialKnockbackForce: 40
+  speed: 12
   specialCoolDown: 3
   specialDamage: 3
   specialSize: 4
   missilePrefab: {fileID: 168275443498942924, guid: a9c542a4b95f325438e288d791b7b31c,
     type: 3}
   fireRate: 0.3
-  nbMissileFired: 4
+  nbMissileFired: 10
   missileSpeed: 10

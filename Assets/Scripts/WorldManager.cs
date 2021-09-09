@@ -29,7 +29,7 @@ public class WorldManager : MonoBehaviour
         foreach (GameObject scrollingZone in scrollingZones)
             scrollingZone.GetComponent<ScrollingZone>().worldMananger = this;
 
-        //SummonNormalEnemyAt(transform.position + Vector3.right * 15);
+        SummonNormalEnemyAt(transform.position + Vector3.right * 15);
         //SummonFlyingEnemyAt(transform.position + Vector3.right * 15);
 
     }

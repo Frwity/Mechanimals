@@ -43,8 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793cb0ffaf6301d4cb9f9121666d8464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upperSprite: {fileID: 21300000, guid: 3af7343f87b21c04a8c45b84e0298980, type: 3}
-  lowSprite: {fileID: 21300000, guid: e1ab2d6aad8611944a5078447b6f9855, type: 3}
+  upperSprite: {fileID: 5727044766970988352, guid: 0337edd0870c6cf49ba5b46d99153330,
+    type: 3}
+  lowSprite: {fileID: 2761225480645418724, guid: 024ce8fe125be594bbe04d256bef7df1,
+    type: 3}
   range: 4.5
   attackSpeed: 0.5
   knockbackForce: 15
