@@ -223,13 +223,13 @@ public class Player : MonoBehaviour
         int lowNo = (upperNo + Random.Range(1, animals.Length)) % animals.Length;
 
         //Upper Body setup
-        upperBodyChara = animals[1].GetComponent<AnimalChara>();
+        upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
         upperBody = GameObject.Instantiate(upperBodyChara.GetUpperSprite(), transform.GetChild(0).position, Quaternion.identity);
         upperBody.transform.parent = transform;
         upperBodyAnimator = upperBody.GetComponent<Animator>();
 
         //Lower body setup
-        lowBodyChara = animals[1].GetComponent<AnimalChara>();
+        lowBodyChara = animals[lowNo].GetComponent<AnimalChara>();
         lowerBody = GameObject.Instantiate(lowBodyChara.GetLowSprite(), transform.GetChild(1).position, Quaternion.identity);
         lowerBody.transform.parent = transform;
         lowerBodyAnimator = lowerBody.GetComponent<Animator>();
