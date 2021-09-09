@@ -104,7 +104,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
+    public virtual void TakeDamage(int damage, int comboNum, Vector3 knockbackVelocity)
     {
         life = Mathf.Clamp(life, 0, life - damage);
         GetComponent<Rigidbody2D>().velocity = knockbackVelocity;

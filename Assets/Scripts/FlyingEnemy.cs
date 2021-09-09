@@ -90,7 +90,7 @@ public class FlyingEnemy : Enemy
 
     }
 
-    public override void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
+    public override void TakeDamage(int damage, int comboNum, Vector3 knockbackVelocity)
     {
         base.TakeDamage(damage, comboNum, knockbackVelocity);
         GetComponent<Rigidbody2D>().gravityScale = 1f;
