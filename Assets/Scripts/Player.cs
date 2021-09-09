@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Player : MonoBehaviour
 {
     // USP
-
+   
     [SerializeField] GameObject[] animals;
 
     [HideInInspector] public AnimalChara upperBodyChara;
@@ -36,9 +36,7 @@ public class Player : MonoBehaviour
     [SerializeField] float comboUptime = 2.0f;
     [SerializeField] public Vector2 knockBackDirection;
     [SerializeField] float attractionForce = 2.0f;
-    [SerializeField] float invulnerabilityTime = 1.0f;
 
-    float invulnerabilityTimer = 0.0f;
     float specialTimer = 0.0f;
     float attackTimer = 0.0f;
     float comboTimer = 0.0f;
@@ -51,9 +49,9 @@ public class Player : MonoBehaviour
     Animator lowerBodyAnimator;
 
     // Stats
-    [SerializeField] public int maxLife = 2;
-    /*[HideInInspector]*/ public int life;
-    /*[HideInInspector]*/ public bool isAlive = true;
+    [SerializeField] int maxLife = 2;
+    int life;
+    bool isAlive = true;
 
     int comboCounter = 0;
 
@@ -65,7 +63,7 @@ public class Player : MonoBehaviour
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
-        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f) / 2, 0.0f, 0.0f));
+ 		attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
 
         specialBoxPosition.GetComponent<SpecialBox>().Initiate();
         specialBoxPosition.SetActive(false);
@@ -73,13 +71,10 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if (!isAlive)
-            return;
-        invulnerabilityTimer += Time.deltaTime;
         if (isAttacking)
         {
             attackTimer += Time.deltaTime;
-            if (attackTimer >= upperBodyChara.GetAttackSpeed())
+            if(attackTimer >= upperBodyChara.GetAttackSpeed())
             {
                 isAttacking = false;
                 attackTimer = 0.0f;
@@ -88,7 +83,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (comboCounter > 0)
+        if(comboCounter > 0)
         {
             comboTimer += Time.deltaTime;
             if (comboTimer >= comboUptime)
@@ -101,8 +96,6 @@ public class Player : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!isAlive)
-            return;
         if (isMoving && !isSpecial)
         {
             if (moveInput.x <= 0f)
@@ -132,6 +125,7 @@ public class Player : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         isMoving = !context.canceled;
+        upperBodyAnimator.SetBool("IsMoving", isMoving);
         lowerBodyAnimator.SetBool("IsMoving", isMoving);
     }
 
@@ -145,13 +139,16 @@ public class Player : MonoBehaviour
             isGrounded = false;
             upperBodyAnimator.SetBool("IsJumping", true);
             upperBodyAnimator.SetBool("IsGrounded", isGrounded);
+            lowerBodyAnimator.SetTrigger("Jump");
             lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
+            upperBodyAnimator.SetBool("IsMoving", false);
+            lowerBodyAnimator.SetBool("IsMoving", false);
         }
     }
 
     public void OnAttack(CallbackContext context)
     {
-        if (context.performed)
+        if(context.performed)
         {
             //TODO polish : when spamming attack button wrong animation is lauch sometimes
 
@@ -164,12 +161,15 @@ public class Player : MonoBehaviour
 
             isAttacking = true;
 
-            if (comboCounter < maxCombo)
+            if(comboCounter <maxCombo)
             {
                 comboCounter++;
                 comboTimer = 0.0f;
                 upperBodyAnimator.SetBool("IsAttacking", isAttacking);
                 upperBodyAnimator.SetInteger("NumCombo", comboCounter);
+                lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
+                upperBodyAnimator.SetBool("IsMoving", false);
+                lowerBodyAnimator.SetBool("IsMoving", false);
                 //TODO Check collision with animation event ?
                 CheckAttackCollision();
             }
@@ -187,10 +187,12 @@ public class Player : MonoBehaviour
 
     public void OnSpecial(CallbackContext context)
     {
-        if (specialTimer >= lowBodyChara.GetSpecialCoolDown() && !isSpecial && context.started)
+        if (specialTimer >= upperBodyChara.GetSpecialCoolDown() && !isSpecial && context.started)
         {
             specialTimer = 0f;
             isSpecial = true;
+            upperBodyAnimator.SetTrigger("SpecialAttack");
+            lowerBodyAnimator.SetTrigger("SpecialAttack");
             lowBodyChara.InitiateSpecialAttack(this);
         }
     }
@@ -209,7 +211,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Vector2 RandomChangeBody() // goat bear crab
+    private void RandomChangeBody() // goat bear crab
     {
         if (upperBody != null)
             GameObject.Destroy(upperBody);
@@ -217,8 +219,8 @@ public class Player : MonoBehaviour
         if (lowerBody != null)
             GameObject.Destroy(lowerBody);
 
-        int lowNo = Random.Range(0, animals.Length);
-        int upperNo = (lowNo + Random.Range(1, animals.Length)) % animals.Length;
+        int upperNo = Random.Range(0, animals.Length);
+        int lowNo = (upperNo + Random.Range(1, animals.Length)) % animals.Length;
 
         //Upper Body setup
         upperBodyChara = animals[1].GetComponent<AnimalChara>();
@@ -236,18 +238,16 @@ public class Player : MonoBehaviour
             specialBoxPosition.transform.localScale = new Vector3(1, 1);
         else if (lowNo == 1)
             specialBoxPosition.transform.localScale = new Vector3(lowBodyChara.GetSpecialSize(), 1);
-
-        return new Vector2(lowNo, upperNo);
     }
 
     private void CheckAttackCollision()
     {
         Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
 
-        foreach (Collider2D enemy in collideEnemies)
+        foreach(Collider2D enemy in collideEnemies)
         {
             Enemy en = enemy.gameObject.GetComponent<Enemy>();
-
+            
             if (en)
             {
                 Vector2 knockbackVelocity = Vector2.zero;
@@ -256,9 +256,8 @@ public class Player : MonoBehaviour
                     knockbackVelocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
                 else
                     knockbackVelocity = (attackBoxPosition.position - en.transform.position) * attractionForce;
-
+                
                 en.TakeDamage(damage, comboCounter, knockbackVelocity);
-
             }
         }
     }
@@ -272,31 +271,21 @@ public class Player : MonoBehaviour
         rb.simulated = true;
         rb.velocity = Vector2.zero;
         upperBodyAnimator.SetBool("IsAttacking", isAttacking);
+        lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
     }
 
-    public void TakeDamage(int damage, Vector2 knockbackVelocity)
+    public void TakeDamage(int damage)
     {
-        if (invulnerabilityTimer < invulnerabilityTime)
-            return;
-        invulnerabilityTimer = 0.0f;
-
         life = Mathf.Clamp(life, 0, life - damage);
 
         //reset combo when hit
         comboCounter = 0;
-        GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
 
-        if (life <= 0)
-        {
+        upperBodyAnimator.SetTrigger("Hit");
+        lowerBodyAnimator.SetTrigger("Hit");
+
+        if (life == 0)
             isAlive = false;
-            Invoke("Die", 1f);
-        }
-    }
-
-    void Die()
-    {
-        if (!isAlive)
-            gameObject.SetActive(false);
     }
 
     private void OnDrawGizmos()
