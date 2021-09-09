@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 7020830349603269270}
   - component: {fileID: 3036735522805165335}
   - component: {fileID: 4464289495205428773}
-  - component: {fileID: 8997373223290034324}
   - component: {fileID: 3361329769829032471}
   m_Layer: 6
   m_Name: Player
@@ -279,6 +278,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 02a9f19d0c4a58946a8c259294de8156, type: 3}
   - {fileID: 8300000, guid: 77372bfc165b91c49a211fe85c57082a, type: 3}
   - {fileID: 8300000, guid: a6998873f22c86143aee7fcdcc7d7021, type: 3}
+  audioSource: {fileID: 0}
 --- !u!114 &4464289495205428773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,25 +390,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player Controller
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!95 &8997373223290034324
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7020830349603269271}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1775a2b183732044b909bc530edb731e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &3361329769829032471
 AudioSource:
   m_ObjectHideFlags: 0

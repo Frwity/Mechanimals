@@ -23,6 +23,7 @@ public class GoatChara : AnimalChara
 
     public override void InitiateSpecialAttack(Player player)
     {
+        player.audioSource.PlayOneShot(animalSounds[0]);
         dashTimer = dashTime;
         player.specialBoxPosition.GetComponent<SpecialBox>().ReInitiate();
     }

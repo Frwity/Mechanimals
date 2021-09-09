@@ -30,6 +30,7 @@ public class CrabChara : AnimalChara
     }
     public override void InitiateSpecialAttack(Player _player)
     {
+        player.audioSource.PlayOneShot(animalSounds[0]);
         player = _player;
         player.GetComponent<Rigidbody2D>().simulated = false;
         HasFired = false;

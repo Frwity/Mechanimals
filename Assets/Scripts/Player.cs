@@ -45,9 +45,10 @@ public class Player : MonoBehaviour
     float comboTimer = 0.0f;
     bool isAttacking = false;
     bool isSpecial = false;
+    public bool isComboUse = false;
+    public bool canCombo = false;
 
     //Animation
-    Animator anim;
     Animator upperBodyAnimator;
     Animator lowerBodyAnimator;
 
@@ -68,7 +69,6 @@ public class Player : MonoBehaviour
         life = maxLife;
         rb = GetComponent<Rigidbody2D>();
         life = maxLife;
-        anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
  		attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
 
@@ -180,6 +180,9 @@ public class Player : MonoBehaviour
             {
                 comboCounter++;
                 comboTimer = 0.0f;
+
+                if (canCombo && comboCounter < 3)
+                    upperBodyAnimator.SetBool("CanCombo", canCombo);
                 
                 //TODO polish use animation event
                 switch(comboCounter)
@@ -191,7 +194,7 @@ public class Player : MonoBehaviour
                         audioSource.PlayOneShot(sounds[2]);
                         break;
                     case 3:
-                        audioSource.PlayOneShot(sounds[2]);
+                        audioSource.PlayOneShot(sounds[3]);
                         break;
                     default:
                         break;
@@ -204,9 +207,13 @@ public class Player : MonoBehaviour
                 lowerBodyAnimator.SetBool("IsMoving", false);
                 //TODO Check collision with animation event ?
                 CheckAttackCollision();
-
             }
         }
+    }
+
+    public void EndComboAnimation()
+    {
+        upperBodyAnimator.SetBool("CanCombo", false);
     }
 
     public void OnDebug(CallbackContext context)

@@ -12,5 +12,17 @@ public class AnimationCancel : MonoBehaviour
     public void EndAttack()
     {
         p.EndAttack();
+        p.canCombo = false;
+    }
+
+    public void ComboCanBePressed()
+    {
+        p.EndComboAnimation();
+        p.canCombo = true;
+    }
+
+    public void EndComboCanBePressed()
+    {
+        p.canCombo = false;
     }
 }
