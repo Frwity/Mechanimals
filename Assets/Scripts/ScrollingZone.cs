@@ -17,8 +17,6 @@ public class ScrollingZone : MonoBehaviour
     };
     [SerializeField] public Wave[] waves;
 
-
-    [SerializeField] GameObject triggerZone;
     [SerializeField] GameObject cameraAnchor1;
     [SerializeField] GameObject cameraAnchor2;
     [SerializeField] float speed;
@@ -33,12 +31,6 @@ public class ScrollingZone : MonoBehaviour
 
     public void Update()
     {
-        if (triggerZone.GetComponent<TriggerZone>().isTrigger)
-        {
-            worldMananger.currentScrollingZone = this;
-            triggerZone.SetActive(false);
-            isFighting = true;
-        }
         if (isFighting)
         {
             cameraLerpPos += lerpSpeed * Time.deltaTime;
@@ -57,6 +49,12 @@ public class ScrollingZone : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ActivateScrollingZone()
+    {
+        worldMananger.currentScrollingZone = this;
+        isFighting = true;
     }
 
     public Vector3 GetCameraPostion()

@@ -14,6 +14,8 @@ public class Arena : MonoBehaviour
 
     [SerializeField] GameObject cameraAnchor;
 
+    [SerializeField] GameObject nextScrollingZone;
+
     bool isFighting = false;
 
     [System.Serializable]
@@ -90,12 +92,13 @@ public class Arena : MonoBehaviour
                     isWaveFinished = false;
                     isWaveFinishedSpawning = false;
                     ++currentWave;
-                    if (currentWave >= waves.Length)
+                    if (currentWave >= waves.Length) // check arena finished
                     {
                         worldMananger.currentArena = null;
                         worldMananger.RespawnPlayerIfDead();
                         isFighting = false;
                         secondDoor.SetActive(false);
+                        nextScrollingZone.GetComponent<ScrollingZone>().ActivateScrollingZone();
                         return;
                     }
                     totalWaveEnemy = waves[currentWave].flyingSpawn.Length + waves[currentWave].normalSpawn.Length;
