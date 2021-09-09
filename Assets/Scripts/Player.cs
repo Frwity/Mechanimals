@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     [HideInInspector] public AnimalChara upperBodyChara;
     [HideInInspector] public AnimalChara lowBodyChara;
 
+    GameObject upperBody;
+    GameObject lowerBody;
+
     // Movement
 
     [HideInInspector] public Rigidbody2D rb;
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour
 
     //Animation
     Animator anim;
+    Animator upperBodyAnimator;
+    Animator lowerBodyAnimator;
 
     // Stats
     [SerializeField] int maxLife = 2;
@@ -120,6 +125,7 @@ public class Player : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         isMoving = !context.canceled;
+        lowerBodyAnimator.SetBool("IsMoving", isMoving);
     }
 
     public void OnJump(CallbackContext context)
@@ -130,6 +136,9 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jump * jumpForce);
             jump = 0f;
             isGrounded = false;
+            upperBodyAnimator.SetBool("IsJumping", true);
+            upperBodyAnimator.SetBool("IsGrounded", isGrounded);
+            lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
         }
     }
 
@@ -140,7 +149,7 @@ public class Player : MonoBehaviour
             //TODO polish : when spamming attack button wrong animation is lauch sometimes
 
             //if combo is finished the player has to wait until he is on the ground
-            if (!isGrounded && anim.GetInteger("numCombo") == 3)
+            if (!isGrounded && upperBodyAnimator.GetInteger("NumCombo") == 3)
                 return;
 
             if (!isGrounded)
@@ -152,8 +161,8 @@ public class Player : MonoBehaviour
             {
                 comboCounter++;
                 comboTimer = 0.0f;
-                anim.SetBool("isAttacking", isAttacking);
-                anim.SetInteger("numCombo", comboCounter);
+                upperBodyAnimator.SetBool("IsAttacking", isAttacking);
+                upperBodyAnimator.SetInteger("NumCombo", comboCounter);
                 //TODO Check collision with animation event ?
                 CheckAttackCollision();
             }
@@ -184,21 +193,37 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
+            upperBodyAnimator.SetBool("IsGrounded", isGrounded);
+            upperBodyAnimator.SetBool("IsJumping", false);
+            lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
 
-            if (anim.GetInteger("numCombo") == 3)
-                anim.SetInteger("numCombo", 0);
+            if (upperBodyAnimator.GetInteger("NumCombo") == 3)
+                upperBodyAnimator.SetInteger("NumCombo", 0);
         }
     }
 
     private void RandomChangeBody() // goat bear crab
     {
+        if (upperBody != null)
+            GameObject.Destroy(upperBody);
+
+        if (lowerBody != null)
+            GameObject.Destroy(lowerBody);
+
         int upperNo = Random.Range(0, animals.Length);
         int lowNo = (upperNo + Random.Range(1, animals.Length)) % animals.Length;
 
-        upperBodyChara = animals[upperNo].GetComponent<AnimalChara>();
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = upperBodyChara.GetUpperSprite();
-        lowBodyChara = animals[lowNo].GetComponent<AnimalChara>();
-        transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = lowBodyChara.GetLowSprite();
+        //Upper Body setup
+        upperBodyChara = animals[1].GetComponent<AnimalChara>();
+        upperBody = GameObject.Instantiate(upperBodyChara.GetUpperSprite(), transform.GetChild(0).position, Quaternion.identity);
+        upperBody.transform.parent = transform;
+        upperBodyAnimator = upperBody.GetComponent<Animator>();
+
+        //Lower body setup
+        lowBodyChara = animals[1].GetComponent<AnimalChara>();
+        lowerBody = GameObject.Instantiate(lowBodyChara.GetLowSprite(), transform.GetChild(1).position, Quaternion.identity);
+        lowerBody.transform.parent = transform;
+        lowerBodyAnimator = lowerBody.GetComponent<Animator>();
 
         if (lowNo == 0)
             specialBoxPosition.transform.localScale = new Vector3(1, 1);
@@ -231,13 +256,13 @@ public class Player : MonoBehaviour
 
     public void EndAttack()
     {
-        if (anim.GetInteger("numCombo") == 3)
+        if (upperBodyAnimator.GetInteger("NumCombo") == 3)
             comboCounter = 0;
 
         isAttacking = false;
         rb.simulated = true;
         rb.velocity = Vector2.zero;
-        anim.SetBool("isAttacking", isAttacking);
+        upperBodyAnimator.SetBool("IsAttacking", isAttacking);
     }
 
     public void TakeDamage(int damage)
