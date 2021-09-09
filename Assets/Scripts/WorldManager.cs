@@ -184,6 +184,7 @@ public class WorldManager : MonoBehaviour
         Enemy enemy = Instantiate(enemyPrefabs[0], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
         enemy.worldMananger = this;
         enemy.arena = currentArena;
+        enemy.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void SummonFlyingEnemyAt(Vector3 pos)

@@ -7,8 +7,8 @@ public class KillZone : MonoBehaviour
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
-            collision.collider.GetComponent<Player>().TakeDamage(100000, Vector2.zero);
+            collision.collider.GetComponent<Player>().TakeDamage(collision.collider.GetComponent<Player>().life, Vector2.zero);
         if (collision.collider.CompareTag("Enemy"))
-            collision.collider.GetComponent<Enemy>().TakeDamage(100000, 3, Vector2.zero);
+            collision.collider.GetComponent<Enemy>().TakeDamage(collision.collider.GetComponent<Enemy>().life, 3, Vector2.zero);
     }
 }
