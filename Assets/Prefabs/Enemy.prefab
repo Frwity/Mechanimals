@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 6165420679734019471}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 8780137887571287540}
   - {fileID: 2460852699784031824}
@@ -206,7 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ed9f7dd50eb6d4aaa70d02adcba5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
   worldMananger: {fileID: 0}
   arena: {fileID: 0}
   attackCooldown: 1
@@ -215,11 +214,10 @@ MonoBehaviour:
   attackBoxSize: {x: 0, y: 0}
   damageable:
     serializedVersion: 2
-    m_Bits: 64
-  maxlife: 20
+    m_Bits: 0
+  maxlife: 6
   speed: 3
   waitTime: 2
   range: 2
   timeToDie: 1
-  knockBackDirection: {x: 3, y: 1}
-  knockbackForce: 5
+  hasBeenTargeted: 0
