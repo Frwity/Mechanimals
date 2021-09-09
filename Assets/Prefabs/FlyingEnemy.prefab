@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a997ed5ca255f3409e457e41ada38ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   worldMananger: {fileID: 0}
   arena: {fileID: 0}
   attackCooldown: 3
@@ -189,9 +190,11 @@ MonoBehaviour:
   waitTime: 1
   range: 4
   timeToDie: 1
-  hasBeenTargeted: 0
+  knockBackDirection: {x: 3, y: 1}
+  knockbackForce: 3
   missilePrefab: {fileID: 168275443498942924, guid: ff77501a014bd5142ae67629b42db0af,
     type: 3}
   missileSpeed: 5
   fireRate: 0.3
   timeBeforeReFlying: 1
+  waypointNo: 0

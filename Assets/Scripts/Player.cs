@@ -6,7 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class Player : MonoBehaviour
 {
     // USP
-   
+
     [SerializeField] GameObject[] animals;
 
     [HideInInspector] public AnimalChara upperBodyChara;
@@ -33,7 +33,9 @@ public class Player : MonoBehaviour
     [SerializeField] float comboUptime = 2.0f;
     [SerializeField] public Vector2 knockBackDirection;
     [SerializeField] float attractionForce = 2.0f;
+    [SerializeField] float invulnerabilityTime = 1.0f;
 
+    float invulnerabilityTimer = 0.0f;
     float specialTimer = 0.0f;
     float attackTimer = 0.0f;
     float comboTimer = 0.0f;
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour
     // Stats
     [SerializeField] int maxLife = 2;
     int life;
-    bool isAlive = true;
+    [HideInInspector] public bool isAlive = true;
 
     int comboCounter = 0;
 
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
         life = maxLife;
         anim = GetComponent<Animator>();
         attackBoxSize.x = upperBodyChara.GetRange();
- 		attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f )/ 2, 0.0f, 0.0f));
+        attackBoxPosition.Translate(new Vector3((attackBoxSize.x - 3.5f) / 2, 0.0f, 0.0f));
 
         specialBoxPosition.GetComponent<SpecialBox>().Initiate();
         specialBoxPosition.SetActive(false);
@@ -66,10 +68,11 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
+        invulnerabilityTimer += Time.deltaTime;
         if (isAttacking)
         {
             attackTimer += Time.deltaTime;
-            if(attackTimer >= upperBodyChara.GetAttackSpeed())
+            if (attackTimer >= upperBodyChara.GetAttackSpeed())
             {
                 isAttacking = false;
                 attackTimer = 0.0f;
@@ -78,7 +81,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(comboCounter > 0)
+        if (comboCounter > 0)
         {
             comboTimer += Time.deltaTime;
             if (comboTimer >= comboUptime)
@@ -135,7 +138,7 @@ public class Player : MonoBehaviour
 
     public void OnAttack(CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
             //TODO polish : when spamming attack button wrong animation is lauch sometimes
 
@@ -148,7 +151,7 @@ public class Player : MonoBehaviour
 
             isAttacking = true;
 
-            if(comboCounter <maxCombo)
+            if (comboCounter < maxCombo)
             {
                 comboCounter++;
                 comboTimer = 0.0f;
@@ -210,10 +213,10 @@ public class Player : MonoBehaviour
     {
         Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
 
-        foreach(Collider2D enemy in collideEnemies)
+        foreach (Collider2D enemy in collideEnemies)
         {
             Enemy en = enemy.gameObject.GetComponent<Enemy>();
-            
+
             if (en)
             {
                 Vector2 knockbackVelocity = Vector2.zero;
@@ -222,7 +225,7 @@ public class Player : MonoBehaviour
                     knockbackVelocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
                 else
                     knockbackVelocity = (attackBoxPosition.position - en.transform.position) * attractionForce;
-                
+
                 en.TakeDamage(damage, comboCounter, knockbackVelocity);
 
             }
@@ -240,15 +243,21 @@ public class Player : MonoBehaviour
         anim.SetBool("isAttacking", isAttacking);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector2 knockbackVelocity)
     {
+        if (invulnerabilityTimer < invulnerabilityTime)
+            return;
+        invulnerabilityTimer = 0.0f;
+
         life = Mathf.Clamp(life, 0, life - damage);
 
         //reset combo when hit
         comboCounter = 0;
-        
+
         if (life == 0)
             isAlive = false;
+        else
+            GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
     }
 
     private void OnDrawGizmos()

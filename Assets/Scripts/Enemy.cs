@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     // Movement
 
     [SerializeField] protected float speed = 3f;
+    Rigidbody2D rb;
 
     //Combat
 
@@ -36,8 +37,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] float range = 4.0f;
     [SerializeField] protected float timeToDie = 1f;
 
+    [SerializeField] protected Vector2 knockBackDirection;
+    [SerializeField] protected float knockbackForce;
+
     public virtual void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         life = maxlife;
         target = worldMananger.GetClosestPlayer(transform.position);
     }
@@ -101,37 +106,51 @@ public class Enemy : MonoBehaviour
 
     public virtual void TakeDamage(int damage, int comboNum, Vector2 knockbackVelocity)
     {
-        Debug.Log("OUCH base");
         life = Mathf.Clamp(life, 0, life - damage);
+        GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
         if (life == 0)
         {
             if (arena)
                 arena.AddEnemyKill();
             isAlive = false;
         }
-        else
-            GetComponent<Rigidbody2D>().velocity = knockbackVelocity;
     }
 
     private void Attack()
     {
         if (!isAlive)
             return;
-
         Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
 
         foreach (Collider2D player in collidePlayers)
         {
+            Vector2 knockbackVelocity = (transform.position.x < player.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * knockbackForce;
             Player p = player.gameObject.GetComponent<Player>();
 
             if (p)
-                p.TakeDamage(damage);
+                p.TakeDamage(damage, knockbackVelocity);
         }
     }
 
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         if (attackBoxPosition)
             Gizmos.DrawCube(attackBoxPosition.position, attackBoxSize);
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            rb.velocity = Vector3.zero;
+            rb.sharedMaterial.bounciness = 0f;
+        }
+    }
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            rb.sharedMaterial.bounciness = 0.5f;
+        }
     }
 }
