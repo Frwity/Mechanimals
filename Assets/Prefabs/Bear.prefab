@@ -56,6 +56,9 @@ MonoBehaviour:
   specialDamage: 0
   specialSize: 15
   missilePrefab: {fileID: 0}
+  animalSounds:
+  - {fileID: 8300000, guid: ef6651e2c72661745bbe90124cc9a20c, type: 3}
+  - {fileID: 8300000, guid: 46f5182c8a673ec4e8392637a00efd8d, type: 3}
   jumpUpForce: 25
   jumpDownForce: 70
   jumpUpTime: 0.2

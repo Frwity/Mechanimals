@@ -57,6 +57,9 @@ MonoBehaviour:
   specialSize: 4
   missilePrefab: {fileID: 168275443498942924, guid: a9c542a4b95f325438e288d791b7b31c,
     type: 3}
+  animalSounds:
+  - {fileID: 8300000, guid: fc67e24b6925ece4aa64956c01f13c67, type: 3}
+  - {fileID: 8300000, guid: 7a6c8e7b4e675264da0e26a4f086d8d5, type: 3}
   fireRate: 0.3
   nbMissileFired: 4
   missileSpeed: 10

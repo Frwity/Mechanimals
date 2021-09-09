@@ -48,6 +48,11 @@ public class Enemy : MonoBehaviour
 
     protected bool isHit = false;
 
+    //Audio
+    [SerializeField] public AudioClip[] enemySounds;
+
+    protected AudioSource audioSource;
+
     public void Awake()
     {
         waypoints = new List<GameObject>();
@@ -59,6 +64,7 @@ public class Enemy : MonoBehaviour
         life = maxlife;
         target = worldMananger.GetClosestPlayer(transform.position);
         anim = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void Update()
@@ -142,6 +148,7 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Hit");
         if (life == 0)
         {
+            audioSource.PlayOneShot(enemySounds[1]);
             if (arena)
                 arena.AddEnemyKill();
             isAlive = false;
@@ -160,6 +167,7 @@ public class Enemy : MonoBehaviour
 
         foreach (Collider2D player in collidePlayers)
         {
+            audioSource.PlayOneShot(enemySounds[0]);
             Vector2 knockbackVelocity = (transform.position.x < player.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * knockbackForce;
             Player p = player.gameObject.GetComponent<Player>();
 

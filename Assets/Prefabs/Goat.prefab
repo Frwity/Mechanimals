@@ -56,5 +56,8 @@ MonoBehaviour:
   specialDamage: 3
   specialSize: 4
   missilePrefab: {fileID: 0}
+  animalSounds:
+  - {fileID: 8300000, guid: 1bded6ee256399141bd2e663e420d40c, type: 3}
+  - {fileID: 8300000, guid: b2c7c8bf9c183504588adfbf0742d3e6, type: 3}
   dashForce: 85
   dashTime: 0.2

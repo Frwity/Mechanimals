@@ -92,6 +92,8 @@ public class FlyingEnemy : Enemy
     {
         if (!isAlive)
             return;
+
+        audioSource.PlayOneShot(enemySounds[0]);
         Invoke("LaunchMissile", 0);
         Invoke("LaunchMissile", fireRate);
         Invoke("LaunchMissile", fireRate * 2);

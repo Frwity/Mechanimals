@@ -1,7 +1,9 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -56,6 +58,11 @@ public class Player : MonoBehaviour
 
     int comboCounter = 0;
 
+    //Audio
+    [SerializeField] AudioClip[] sounds;
+
+    public AudioSource audioSource;
+
     public void Awake()
     {
         life = maxLife;
@@ -67,6 +74,7 @@ public class Player : MonoBehaviour
 
         specialBoxPosition.GetComponent<SpecialBox>().Initiate();
         specialBoxPosition.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -149,6 +157,7 @@ public class Player : MonoBehaviour
             lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
             upperBodyAnimator.SetBool("IsMoving", false);
             lowerBodyAnimator.SetBool("IsMoving", false);
+            audioSource.PlayOneShot(sounds[0]);
         }
     }
 
@@ -171,6 +180,23 @@ public class Player : MonoBehaviour
             {
                 comboCounter++;
                 comboTimer = 0.0f;
+                
+                //TODO polish use animation event
+                switch(comboCounter)
+                {
+                    case 1:
+                        audioSource.PlayOneShot(sounds[1]);
+                        break;
+                    case 2:
+                        audioSource.PlayOneShot(sounds[2]);
+                        break;
+                    case 3:
+                        audioSource.PlayOneShot(sounds[2]);
+                        break;
+                    default:
+                        break;
+                }
+
                 upperBodyAnimator.SetBool("IsAttacking", isAttacking);
                 upperBodyAnimator.SetInteger("NumCombo", comboCounter);
                 lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
@@ -178,6 +204,7 @@ public class Player : MonoBehaviour
                 lowerBodyAnimator.SetBool("IsMoving", false);
                 //TODO Check collision with animation event ?
                 CheckAttackCollision();
+
             }
         }
     }
@@ -200,6 +227,7 @@ public class Player : MonoBehaviour
             isSpecial = true;
             upperBodyAnimator.SetTrigger("SpecialAttack");
             lowerBodyAnimator.SetTrigger("SpecialAttack");
+            audioSource.PlayOneShot(lowBodyChara.animalSounds[0]);
             lowBodyChara.InitiateSpecialAttack(this);
         }
     }

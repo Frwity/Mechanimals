@@ -19,6 +19,7 @@ public class AnimalChara : MonoBehaviour
     [SerializeField] protected int specialDamage = 1;
     [SerializeField] protected float specialSize = 4f;
     [SerializeField] protected GameObject missilePrefab;
+    [SerializeField] public AudioClip[] animalSounds;
 
 
     public GameObject GetUpperSprite() { return upperSprite; }
