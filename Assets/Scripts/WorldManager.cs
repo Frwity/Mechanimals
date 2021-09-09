@@ -37,7 +37,7 @@ public class WorldManager : MonoBehaviour
     public void Update()
     {
         if (player1 != null && player2 != null && currentArena == null && currentScrollingZone == null)
-            camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, 7f, -20f), 0.01f); 
+            camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, -28.59f, -20f), 0.01f); 
         else if (currentArena != null)
             camera.transform.position = Vector3.Lerp(camera.transform.position, currentArena.GetCameraPostion(), 0.01f);
         else if (currentScrollingZone)
@@ -184,6 +184,7 @@ public class WorldManager : MonoBehaviour
         Enemy enemy = Instantiate(enemyPrefabs[0], new Vector3(pos.x, pos.y), Quaternion.identity).GetComponent<Enemy>();
         enemy.worldMananger = this;
         enemy.arena = currentArena;
+        enemy.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void SummonFlyingEnemyAt(Vector3 pos)

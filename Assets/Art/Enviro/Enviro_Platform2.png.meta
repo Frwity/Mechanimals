@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: b3d1be68ad8caee40a20ec50b960140b
+guid: 3008a854429927d44b490c302b7b36d8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3434491823646183523
-    second: Enviro_Building2_0
+      213: -5207049911372717068
+    second: gameweek2021_environmentPlatform2_0
   - first:
-      213: -9138605477837486160
-    second: Enviro_Building2_1
-  - first:
-      213: 276676478157693154
-    second: Enviro_Building2_2
-  - first:
-      213: 1983982655104888649
-    second: Enviro_Building2_3
+      213: -3841690778199246759
+    second: gameweek2021_environmentPlatform2_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -127,85 +121,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enviro_Building2_0
-      rect:
-        serializedVersion: 2
-        x: 1436
-        y: 2453
-        width: 128
-        height: 591
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9fe59312eb3650d0800000000000000
-      internalID: -3434491823646183523
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enviro_Building2_1
+      name: gameweek2021_environmentPlatform2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2453
-        width: 131
-        height: 591
+        y: 224
+        width: 1050
+        height: 664
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b7ce0f7cb62d2180800000000000000
-      internalID: -9138605477837486160
+      spriteID: 4f366e891b7dcb7b0800000000000000
+      internalID: -5207049911372717068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enviro_Building2_2
+      name: gameweek2021_environmentPlatform2_1
       rect:
         serializedVersion: 2
-        x: 165
-        y: 1456
-        width: 1236
-        height: 1588
+        x: 37
+        y: 0
+        width: 927
+        height: 160
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e0ab4e7ac3f6d300800000000000000
-      internalID: 276676478157693154
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enviro_Building2_3
-      rect:
-        serializedVersion: 2
-        x: 165
-        y: 413
-        width: 1236
-        height: 999
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 94f201696b5888b10800000000000000
-      internalID: 1983982655104888649
+      spriteID: 9583a8467929faac0800000000000000
+      internalID: -3841690778199246759
       vertices: []
       indices: 
       edges: []
