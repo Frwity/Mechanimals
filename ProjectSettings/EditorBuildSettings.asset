@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LD_Thibaut.unity
+    guid: d721f9a2a2e495946899ae7d2173d0da
   m_configObjects: {}

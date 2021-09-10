@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
     Animator anim;
 
     public bool isHit = false;
-
+    [SerializeField] GameObject boold;
     public GameObject impactFX;
 
     //Audio
@@ -151,6 +151,7 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Hit");
         if (life == 0)
         {
+            Instantiate(boold, transform.position, Quaternion.identity);
             audioSource.PlayOneShot(enemySounds[1]);
             if (arena)
                 arena.AddEnemyKill();
