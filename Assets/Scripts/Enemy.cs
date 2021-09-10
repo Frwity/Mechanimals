@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Vector2 knockBackDirection;
     [SerializeField] protected float knockbackForce;
 
+    [SerializeField] float attackHitTime = 1f;
     //Animation
     Animator anim;
 
@@ -93,7 +94,7 @@ public class Enemy : MonoBehaviour
         if (!isWaiting && !isAttacking && (target.transform.position - transform.position).magnitude < range)
         {
             isAttacking = true;
-            Attack();
+            StartAttack();
         }
         else if (isAttacking)
         {
@@ -157,13 +158,19 @@ public class Enemy : MonoBehaviour
             isHit = true;
     }
 
-    private void Attack()
+    private void StartAttack()
     {
         if (!isAlive)
             return;
-        Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
         anim.SetBool("IsMoving", false);
         anim.SetTrigger("Attack");
+        Invoke("Attack", attackHitTime);
+    }
+
+    private void Attack()
+    {
+        Collider2D[] collidePlayers = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
+        
 
         foreach (Collider2D player in collidePlayers)
         {
