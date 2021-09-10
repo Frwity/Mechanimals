@@ -135,7 +135,7 @@ MonoBehaviour:
   damageable:
     serializedVersion: 2
     m_Bits: 64
-  maxlife: 1
+  maxlife: 6
   life: 0
   speed: 10
   waitTime: 2
@@ -144,6 +144,8 @@ MonoBehaviour:
   timeToDie: 1
   knockBackDirection: {x: 3, y: 1}
   knockbackForce: 5
+  attackHitTime: 1
+  isHit: 0
   enemySounds:
   - {fileID: 8300000, guid: 4e83f50aef465614dbf6e7ed42bc1dec, type: 3}
   - {fileID: 8300000, guid: 6ead2556f92486644acfef12236339cf, type: 3}
