@@ -21,6 +21,18 @@ public class WorldManager : MonoBehaviour
 
     [SerializeField] new Camera camera = null;
 
+    [SerializeField] Sprite p1Arrow;
+    [SerializeField] Sprite p2Arrow;
+
+    [SerializeField] GameObject spawn;
+
+    // ui
+
+    [SerializeField] GameObject menu;
+    [SerializeField] GameObject p1Arrowstart;
+    [SerializeField] GameObject p2Arrowstart;
+
+
     private Vector2 p1body;
 
     public void Start()
@@ -111,6 +123,8 @@ public class WorldManager : MonoBehaviour
             player1.transform.position = transform.position;
             int r = Random.Range(0, 3);
             p1body = player1.GetComponent<Player>().RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
+            player1.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p1Arrow;
+            p1Arrowstart.GetComponent<Image>().color = Color.green;
             return;
         }
 
@@ -118,7 +132,9 @@ public class WorldManager : MonoBehaviour
         {
             player2 = playerInput.gameObject;
             player2.transform.position = transform.position;
-            player1.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
+            player2.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
+            player2.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p2Arrow;
+            p2Arrowstart.GetComponent<Image>().color = Color.green;
         }
 
         firstDoor.SetActive(false);
@@ -211,4 +227,20 @@ public class WorldManager : MonoBehaviour
         enemy.worldMananger = this;
         enemy.arena = currentArena;
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Play()
+    {
+        if (player1 != null /*&& player2 != null*/)
+        {
+            player1.transform.position = spawn.transform.position;
+            //player2.transform.position = spawn.transform.position;
+            menu.SetActive(false);
+        }
+    }
+
 }
