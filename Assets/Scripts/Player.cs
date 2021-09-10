@@ -255,6 +255,13 @@ public class Player : MonoBehaviour
 
     public Vector2 RandomChangeBody(int x, int y) // goat bear crab
     {
+        //Fix animation reverse when facing left
+        if(isFlipped)
+        {
+            isFlipped = false;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+
         if (upperBody != null)
             Destroy(upperBody);
 
@@ -286,7 +293,6 @@ public class Player : MonoBehaviour
 		return new Vector2(lowNo, upperNo);
     }
 
-  
     private void CheckAttackCollision()
     {
         Collider2D[] collideEnemies = Physics2D.OverlapBoxAll(attackBoxPosition.position, attackBoxSize, 0, damageable);
