@@ -30,8 +30,8 @@ public class CrabChara : AnimalChara
     }
     public override void InitiateSpecialAttack(Player _player)
     {
-        if(animalSounds != null)
-            player.audioSource.PlayOneShot(animalSounds[0]);
+        //if(animalSounds != null)
+          //  player.audioSource.PlayOneShot(animalSounds[0]);
         player = _player;
         player.GetComponent<Rigidbody2D>().simulated = false;
         HasFired = false;
@@ -51,6 +51,9 @@ public class CrabChara : AnimalChara
             fireTimer = -1f;
             return;
         }
+
+        if(specialImpactParticle)
+            Instantiate(specialImpactParticle, transform.position, Quaternion.identity);
 
         Instantiate(missilePrefab, pos, Quaternion.identity).GetComponent<PlayerMissile>().InitiateMissile
             (specialDamage, missileSpeed, enemy, player.knockBackDirection * specialKnockbackForce);

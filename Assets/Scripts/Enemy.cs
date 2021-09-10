@@ -48,6 +48,8 @@ public class Enemy : MonoBehaviour
 
     protected bool isHit = false;
 
+    public GameObject impactFX;
+
     //Audio
     [SerializeField] public AudioClip[] enemySounds;
 

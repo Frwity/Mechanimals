@@ -52,6 +52,8 @@ public class Player : MonoBehaviour
     Animator upperBodyAnimator;
     Animator lowerBodyAnimator;
 
+    public GameObject enemyImpactFX;
+
     // Stats
     [SerializeField] public int maxLife = 2;
     public int life;
@@ -285,6 +287,9 @@ public class Player : MonoBehaviour
         lowerBody.transform.parent = transform;
         lowerBodyAnimator = lowerBody.GetComponent<Animator>();
 
+        upperBodyAnimator.SetBool("IsGrounded", isGrounded);
+        lowerBodyAnimator.SetBool("IsGrounded", isGrounded);
+        
         if (lowNo == 0)
             specialBoxPosition.transform.localScale = new Vector3(1, 1);
         else if (lowNo == 1)
@@ -304,12 +309,18 @@ public class Player : MonoBehaviour
             if (en)
             {
                 Vector2 knockbackVelocity = Vector2.zero;
+                if (upperBodyChara.impact1Particle)
+                    GameObject.Instantiate(upperBodyChara.impact1Particle, en.transform.position, Quaternion.identity);
                 //Knock back enemy
                 if (comboCounter == 3)
+                {
                     knockbackVelocity = (transform.position.x < en.transform.position.x ? knockBackDirection : new Vector2(-knockBackDirection.x, knockBackDirection.y)) * upperBodyChara.GetKnockbackForce();
+                    if (upperBodyChara.impact3Particle)
+                        GameObject.Instantiate(upperBodyChara.impact3Particle, en.transform.position, Quaternion.identity);
+                }
                 else
                     knockbackVelocity = (attackBoxPosition.position - en.transform.position) * attractionForce;
-                
+
                 en.TakeDamage(damage, comboCounter, knockbackVelocity);
             }
         }
@@ -327,11 +338,14 @@ public class Player : MonoBehaviour
         lowerBodyAnimator.SetBool("IsAttacking", isAttacking);
     }
 
-    public void TakeDamage(int damage, Vector2 knockbackVelocity) //
+    public void TakeDamage(int damage, Vector2 knockbackVelocity)
     {
         if (invulnerabilityTimer < invulnerabilityTime)
             return;
         invulnerabilityTimer = 0.0f;
+
+        if (enemyImpactFX)
+            Instantiate(enemyImpactFX, transform.position, Quaternion.identity);
 
         life = Mathf.Clamp(life, 0, life - damage);
 
