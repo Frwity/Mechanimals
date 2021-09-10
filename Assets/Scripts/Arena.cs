@@ -16,7 +16,6 @@ public class Arena : MonoBehaviour
 
     [SerializeField] GameObject nextScrollingZone;
 
-    bool isFighting = false;
 
     [System.Serializable]
     public class Wave
@@ -29,6 +28,7 @@ public class Arena : MonoBehaviour
     [SerializeField] public Wave[] waves;
 
     [SerializeField] float timeBetweenWaves = 5f;
+    bool isFighting = false;
     float timerBetweenWaves = 0f;
     bool isWaveFinished = false;
     bool isWaveFinishedSpawning = false;
@@ -77,7 +77,7 @@ public class Arena : MonoBehaviour
 
 
             // check wave ending 
-            if (!isWaveFinished && totalWaveEnemy == currentEnemykilled)
+            if (!isWaveFinished && currentEnemykilled >= totalWaveEnemy)
             {
                 timerBetweenWaves = 0f;
                 isWaveFinished = true;

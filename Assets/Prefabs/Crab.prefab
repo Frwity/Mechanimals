@@ -47,11 +47,11 @@ MonoBehaviour:
     type: 3}
   lowSprite: {fileID: 6586251041953643386, guid: db780197c4facbe43adc3d471d293bdf,
     type: 3}
-  range: 3
+  range: 5.5
   attackSpeed: 0.5
   knockbackForce: 9
-  specialKnockbackForce: 9
-  speed: 12
+  specialKnockbackForce: 5
+  speed: 15
   specialCoolDown: 3
   specialDamage: 3
   specialSize: 4
@@ -60,6 +60,12 @@ MonoBehaviour:
   animalSounds:
   - {fileID: 8300000, guid: fc67e24b6925ece4aa64956c01f13c67, type: 3}
   - {fileID: 8300000, guid: 7a6c8e7b4e675264da0e26a4f086d8d5, type: 3}
+  impact1Particle: {fileID: 8155908856085156035, guid: 46e6a9a51d3397c4cb78ca736f57e675,
+    type: 3}
+  impact3Particle: {fileID: 7923967544501693569, guid: a26afadf464180b489a33716d6434346,
+    type: 3}
+  specialImpactParticle: {fileID: 4440221974604661181, guid: cfaed51ac49046f43a62033f01016368,
+    type: 3}
   fireRate: 0.3
   nbMissileFired: 4
   missileSpeed: 10

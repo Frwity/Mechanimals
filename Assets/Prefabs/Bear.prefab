@@ -53,12 +53,18 @@ MonoBehaviour:
   specialKnockbackForce: 15
   speed: 18
   specialCoolDown: 3
-  specialDamage: 0
+  specialDamage: 3
   specialSize: 15
   missilePrefab: {fileID: 0}
   animalSounds:
   - {fileID: 8300000, guid: ef6651e2c72661745bbe90124cc9a20c, type: 3}
   - {fileID: 8300000, guid: 46f5182c8a673ec4e8392637a00efd8d, type: 3}
+  impact1Particle: {fileID: 8155908856085156035, guid: 46e6a9a51d3397c4cb78ca736f57e675,
+    type: 3}
+  impact3Particle: {fileID: 7923967544501693569, guid: a26afadf464180b489a33716d6434346,
+    type: 3}
+  specialImpactParticle: {fileID: 5085367052913515080, guid: 0d915f316dec5db40b3a06080ca95f42,
+    type: 3}
   jumpUpForce: 25
   jumpDownForce: 70
   jumpUpTime: 0.2

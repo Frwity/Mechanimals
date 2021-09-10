@@ -47,11 +47,11 @@ MonoBehaviour:
     type: 3}
   lowSprite: {fileID: 5668491984167508083, guid: 5cdfc99732597594088ac040f7a89103,
     type: 3}
-  range: 1
+  range: 3.5
   attackSpeed: 0.5
   knockbackForce: 12
-  specialKnockbackForce: 40
-  speed: 18
+  specialKnockbackForce: 15
+  speed: 21
   specialCoolDown: 1
   specialDamage: 3
   specialSize: 4
@@ -59,5 +59,11 @@ MonoBehaviour:
   animalSounds:
   - {fileID: 8300000, guid: 1bded6ee256399141bd2e663e420d40c, type: 3}
   - {fileID: 8300000, guid: b2c7c8bf9c183504588adfbf0742d3e6, type: 3}
+  impact1Particle: {fileID: 8155908856085156035, guid: 46e6a9a51d3397c4cb78ca736f57e675,
+    type: 3}
+  impact3Particle: {fileID: 7923967544501693569, guid: a26afadf464180b489a33716d6434346,
+    type: 3}
+  specialImpactParticle: {fileID: 5085367052913515080, guid: 3d9de80071bf30d48965a04d2adde9fc,
+    type: 3}
   dashForce: 85
   dashTime: 0.2

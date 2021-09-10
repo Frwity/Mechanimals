@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.SceneManagement;
 
 public class WorldManager : MonoBehaviour
 {
@@ -19,12 +20,31 @@ public class WorldManager : MonoBehaviour
     [HideInInspector] public GameObject player1 = null;
     [HideInInspector] public GameObject player2 = null;
 
-    [SerializeField] new Camera camera = null;
+    [SerializeField] public new GameObject camera = null;
+
+    [SerializeField] Sprite p1Arrow;
+    [SerializeField] Sprite p2Arrow;
+
+    [SerializeField] GameObject spawn;
+
+    // ui
+
+    [SerializeField] GameObject menu;
+    [SerializeField] GameObject p1Arrowstart;
+    [SerializeField] GameObject p2Arrowstart;
+    [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject loseMenu;
+
+    [SerializeField] GameObject triggerWin;
+
+    public static WorldManager worldManager;
 
     private Vector2 p1body;
 
     public void Start()
     {
+        worldManager = this;
+
         firstDoor.SetActive(true);
         foreach (GameObject arena in arenas)
             arena.GetComponent<Arena>().worldMananger = this;
@@ -38,6 +58,9 @@ public class WorldManager : MonoBehaviour
 
     public void Update()
     {
+        if (triggerWin.GetComponent<TriggerZone>().isTrigger)
+            winMenu.SetActive(true);
+
         if (player1 != null && player2 != null && currentArena == null && currentScrollingZone == null)
             camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, -28.59f, -20f), 0.01f); 
         else if (currentArena != null)
@@ -75,31 +98,32 @@ public class WorldManager : MonoBehaviour
 
             if (!p1.isAlive && !p2.isAlive)
             {
-                p1.rb.velocity = Vector2.zero;
-                p1.life = p1.maxLife;
-                p1.isAlive = true;
-                p1.transform.position = transform.position;
-                player1.SetActive(true);
-                p2.rb.velocity = Vector2.zero;
-                p2.life = p2.maxLife;
-                p2.isAlive = true;
-                p2.transform.position = transform.position;
-                player2.SetActive(true);
+                loseMenu.SetActive(true);
+                //p1.rb.velocity = Vector2.zero;
+                //p1.life = p1.maxLife;
+                //p1.isAlive = true;
+                //p1.transform.position = transform.position;
+                //player1.SetActive(true);
+                //p2.rb.velocity = Vector2.zero;
+                //p2.life = p2.maxLife;
+                //p2.isAlive = true;
+                //p2.transform.position = transform.position;
+                //player2.SetActive(true);
 
-                foreach (GameObject arena in arenas)
-                    arena.GetComponent<Arena>().ResetArena();
-                foreach (GameObject scrollingZone in scrollingZones)
-                    scrollingZone.GetComponent<ScrollingZone>().ResetScrollingZone();
+                //foreach (GameObject arena in arenas)
+                //    arena.GetComponent<Arena>().ResetArena();
+                //foreach (GameObject scrollingZone in scrollingZones)
+                //    scrollingZone.GetComponent<ScrollingZone>().ResetScrollingZone();
 
-                int r = Random.Range(0, 3);
-                Vector2 p1body = p1.RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
-                p2.RandomChangeBody((int)p1body.x, (int)p1body.y);
+                //int r = Random.Range(0, 3);
+                //Vector2 p1body = p1.RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
+                //p2.RandomChangeBody((int)p1body.x, (int)p1body.y);
 
-                Enemy[] enemies = FindObjectsOfType<Enemy>();
-                foreach (Enemy en in enemies)
-                    Destroy(en.gameObject);
+                //Enemy[] enemies = FindObjectsOfType<Enemy>();
+                //foreach (Enemy en in enemies)
+                //    Destroy(en.gameObject);
 
-                currentArena = null;
+                //currentArena = null;
             }
         }
     }
@@ -111,6 +135,8 @@ public class WorldManager : MonoBehaviour
             player1.transform.position = transform.position;
             int r = Random.Range(0, 3);
             p1body = player1.GetComponent<Player>().RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
+            player1.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p1Arrow;
+            p1Arrowstart.GetComponent<Image>().color = Color.green;
             return;
         }
 
@@ -118,7 +144,9 @@ public class WorldManager : MonoBehaviour
         {
             player2 = playerInput.gameObject;
             player2.transform.position = transform.position;
-            player1.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
+            player2.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
+            player2.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p2Arrow;
+            p2Arrowstart.GetComponent<Image>().color = Color.green;
         }
 
         firstDoor.SetActive(false);
@@ -211,4 +239,25 @@ public class WorldManager : MonoBehaviour
         enemy.worldMananger = this;
         enemy.arena = currentArena;
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void Play()
+    {
+        if (player1 != null && player2 != null)
+        {
+            player1.transform.position = spawn.transform.position;
+            player2.transform.position = spawn.transform.position;
+            menu.SetActive(false);  
+        }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("LD_Thibaut");
+    }
+
 }
