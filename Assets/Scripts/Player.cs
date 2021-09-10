@@ -98,6 +98,8 @@ public class Player : MonoBehaviour
                 attackTimer = 0.0f;
                 rb.simulated = true;
                 rb.velocity = Vector2.zero;
+                upperBodyAnimator.SetBool("IsAttacking", false);
+                lowerBodyAnimator.SetBool("IsAttacking", false);
             }
         }
 
