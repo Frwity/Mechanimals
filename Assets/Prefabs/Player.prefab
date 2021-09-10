@@ -273,6 +273,8 @@ MonoBehaviour:
   invulnerabilityTime: 2
   isComboUse: 0
   canCombo: 0
+  enemyImpactFX: {fileID: 8155908856085156035, guid: 46e6a9a51d3397c4cb78ca736f57e675,
+    type: 3}
   maxLife: 50
   life: 0
   isAlive: 1

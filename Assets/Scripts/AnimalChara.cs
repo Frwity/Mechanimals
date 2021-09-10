@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AnimalChara : MonoBehaviour
@@ -20,6 +18,9 @@ public class AnimalChara : MonoBehaviour
     [SerializeField] protected float specialSize = 4f;
     [SerializeField] protected GameObject missilePrefab;
     [SerializeField] public AudioClip[] animalSounds;
+    public GameObject impact1Particle;
+    public GameObject impact3Particle;
+    public GameObject specialImpactParticle;
 
 
     public GameObject GetUpperSprite() { return upperSprite; }
