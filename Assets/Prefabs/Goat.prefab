@@ -53,7 +53,7 @@ MonoBehaviour:
   specialKnockbackForce: 15
   speed: 21
   specialCoolDown: 1
-  specialDamage: 0
+  specialDamage: 3
   specialSize: 4
   missilePrefab: {fileID: 0}
   animalSounds:
