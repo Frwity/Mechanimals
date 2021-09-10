@@ -225,12 +225,12 @@ public class Player : MonoBehaviour
 
     public void OnDebug(CallbackContext context)
     {
-        if (context.started)
-        {
-            int r = Random.Range(0, animals.Length);
-            RandomChangeBody(r, (r + Random.Range(1, animals.Length)) % animals.Length);
-            attackBoxSize.x = upperBodyChara.GetRange();
-        }
+        //if (context.started)
+        //{
+        //    int r = Random.Range(0, animals.Length);
+        //    RandomChangeBody(r, (r + Random.Range(1, animals.Length)) % animals.Length);
+        //    attackBoxSize.x = upperBodyChara.GetRange();
+        //}
     }
 
     public void OnSpecial(CallbackContext context)

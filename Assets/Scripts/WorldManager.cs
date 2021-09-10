@@ -76,6 +76,11 @@ public class WorldManager : MonoBehaviour
         else if (currentScrollingZone)
             camera.transform.position = Vector3.Lerp(camera.transform.position,currentScrollingZone.GetCameraPostion(), 0.01f);
 
+        if (player1 != null && player2 != null)
+        {
+            SetHealt1();
+            SetHealt2();
+        }
 
         if (currentScrollingZone != null && player1 != null && player2 != null)
         {
@@ -148,6 +153,7 @@ public class WorldManager : MonoBehaviour
             p1Arrowstart.GetComponent<Image>().color = Color.green;
 
             hud.transform.GetChild(0).GetComponent<Image>().sprite = r == 0 ? goathud : (r == 1 ? bearhud : crabhud);
+            SetMaxHealt1();
             return;
         }
 
@@ -159,7 +165,7 @@ public class WorldManager : MonoBehaviour
             player2.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p2Arrow;
             p2Arrowstart.GetComponent<Image>().color = Color.green;
             hud.transform.GetChild(1).GetComponent<Image>().sprite = x == 0 ? goathud : ( x == 1 ? bearhud : crabhud);
-
+            SetMaxHealt2();
         }
 
         firstDoor.SetActive(false);
@@ -264,13 +270,33 @@ public class WorldManager : MonoBehaviour
         {
             player1.transform.position = spawn.transform.position;
             player2.transform.position = spawn.transform.position;
-            menu.SetActive(false);  
+            menu.SetActive(false);
+            hud.SetActive(true);
         }
     }
 
     public void Restart()
     {
         SceneManager.LoadScene("LD_Thibaut");
+    }
+
+    void SetMaxHealt1()
+    {
+        hud.transform.GetChild(2).GetComponent<Slider>().maxValue = player1.GetComponent<Player>().maxLife;
+        hud.transform.GetChild(2).GetComponent<Slider>().value = player1.GetComponent<Player>().maxLife;
+    }
+    void SetMaxHealt2()
+    {
+        hud.transform.GetChild(3).GetComponent<Slider>().maxValue = player2.GetComponent<Player>().maxLife;
+        hud.transform.GetChild(3).GetComponent<Slider>().value = player2.GetComponent<Player>().maxLife;
+    }
+    void SetHealt1()
+    {
+        hud.transform.GetChild(2).GetComponent<Slider>().value = player1.GetComponent<Player>().life;
+    }
+    void SetHealt2()
+    {
+        hud.transform.GetChild(3).GetComponent<Slider>().value = player2.GetComponent<Player>().life;
     }
 
 }
