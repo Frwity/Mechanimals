@@ -47,13 +47,13 @@ MonoBehaviour:
     type: 3}
   lowSprite: {fileID: 5668491984167508083, guid: 5cdfc99732597594088ac040f7a89103,
     type: 3}
-  range: 1
+  range: 3.5
   attackSpeed: 0.5
   knockbackForce: 12
-  specialKnockbackForce: 40
-  speed: 18
+  specialKnockbackForce: 15
+  speed: 21
   specialCoolDown: 1
-  specialDamage: 3
+  specialDamage: 0
   specialSize: 4
   missilePrefab: {fileID: 0}
   animalSounds:
