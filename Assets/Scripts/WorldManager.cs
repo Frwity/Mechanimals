@@ -238,11 +238,11 @@ public class WorldManager : MonoBehaviour
 
     public void Play()
     {
-        if (player1 != null /*&& player2 != null*/)
+        if (player1 != null && player2 != null)
         {
             player1.transform.position = spawn.transform.position;
-            //player2.transform.position = spawn.transform.position;
-            menu.SetActive(false);
+            player2.transform.position = spawn.transform.position;
+            menu.SetActive(false);  
         }
     }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6165420679734019470}
   - component: {fileID: 8871202054954631188}
   - component: {fileID: -4548696425127899086}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: FlyingEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -113,6 +113,7 @@ MonoBehaviour:
   timeToDie: 1
   knockBackDirection: {x: 3, y: 1}
   knockbackForce: 5
+  attackHitTime: 1
   enemySounds:
   - {fileID: 8300000, guid: 18f4c20a095e02c46b1d5cc86c8217b8, type: 3}
   - {fileID: 8300000, guid: 6ead2556f92486644acfef12236339cf, type: 3}
