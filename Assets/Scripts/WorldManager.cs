@@ -25,10 +25,15 @@ public class WorldManager : MonoBehaviour
     [SerializeField] Sprite p1Arrow;
     [SerializeField] Sprite p2Arrow;
 
+    [SerializeField] Sprite bearhud;
+    [SerializeField] Sprite crabhud;
+    [SerializeField] Sprite goathud;
+
     [SerializeField] GameObject spawn;
 
     // ui
 
+    [SerializeField] GameObject hud;
     [SerializeField] GameObject menu;
     [SerializeField] GameObject p1Arrowstart;
     [SerializeField] GameObject p2Arrowstart;
@@ -59,7 +64,10 @@ public class WorldManager : MonoBehaviour
     public void Update()
     {
         if (triggerWin.GetComponent<TriggerZone>().isTrigger)
+        {
+            hud.SetActive(false);
             winMenu.SetActive(true);
+        }
 
         if (player1 != null && player2 != null && currentArena == null && currentScrollingZone == null)
             camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3((player1.transform.position.x + player2.transform.position.x) / 2f, -28.59f, -20f), 0.01f); 
@@ -99,6 +107,7 @@ public class WorldManager : MonoBehaviour
             if (!p1.isAlive && !p2.isAlive)
             {
                 loseMenu.SetActive(true);
+                hud.SetActive(false);
                 //p1.rb.velocity = Vector2.zero;
                 //p1.life = p1.maxLife;
                 //p1.isAlive = true;
@@ -137,6 +146,8 @@ public class WorldManager : MonoBehaviour
             p1body = player1.GetComponent<Player>().RandomChangeBody(r, (r + Random.Range(1, 3)) % 3);
             player1.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p1Arrow;
             p1Arrowstart.GetComponent<Image>().color = Color.green;
+
+            hud.transform.GetChild(0).GetComponent<Image>().sprite = r == 0 ? goathud : (r == 1 ? bearhud : crabhud);
             return;
         }
 
@@ -144,9 +155,11 @@ public class WorldManager : MonoBehaviour
         {
             player2 = playerInput.gameObject;
             player2.transform.position = transform.position;
-            player2.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y);
+            int x = (int)player2.GetComponent<Player>().RandomChangeBody((int)p1body.x, (int)p1body.y).x;
             player2.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = p2Arrow;
             p2Arrowstart.GetComponent<Image>().color = Color.green;
+            hud.transform.GetChild(1).GetComponent<Image>().sprite = x == 0 ? goathud : ( x == 1 ? bearhud : crabhud);
+
         }
 
         firstDoor.SetActive(false);
