@@ -81,6 +81,11 @@ public class Player : MonoBehaviour
     {
         if (!isAlive)
             return;
+        //if (invulnerabilityTimer < invulnerabilityTime)
+        //{
+
+        //}
+
         invulnerabilityTimer += Time.deltaTime;
         if (isAttacking)
         {
@@ -124,7 +129,7 @@ public class Player : MonoBehaviour
             }
 
             if (!isAttacking)
-                transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.deltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
+                transform.Translate((moveInput.x > 0 ? moveInput.x : -moveInput.x) * Time.fixedDeltaTime * lowBodyChara.GetSpeed(), 0f, 0f);
         }
 
         specialBoxPosition.SetActive(false);
