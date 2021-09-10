@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
     //Animation
     Animator anim;
 
-    protected bool isHit = false;
+    public bool isHit = false;
 
     //Audio
     [SerializeField] public AudioClip[] enemySounds;

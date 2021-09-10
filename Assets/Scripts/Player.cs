@@ -236,6 +236,7 @@ public class Player : MonoBehaviour
             lowerBodyAnimator.SetTrigger("SpecialAttack");
             audioSource.PlayOneShot(lowBodyChara.animalSounds[0]);
             lowBodyChara.InitiateSpecialAttack(this);
+            StartCoroutine(WorldManager.worldManager.camera.transform.GetChild(0).GetComponent<ShakeScreen>().Shake(0.15f, 0.2f));
         }
     }
 

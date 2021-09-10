@@ -19,7 +19,7 @@ public class WorldManager : MonoBehaviour
     [HideInInspector] public GameObject player1 = null;
     [HideInInspector] public GameObject player2 = null;
 
-    [SerializeField] new Camera camera = null;
+    [SerializeField] public new GameObject camera = null;
 
     [SerializeField] Sprite p1Arrow;
     [SerializeField] Sprite p2Arrow;
@@ -32,11 +32,14 @@ public class WorldManager : MonoBehaviour
     [SerializeField] GameObject p1Arrowstart;
     [SerializeField] GameObject p2Arrowstart;
 
+    public static WorldManager worldManager;
 
     private Vector2 p1body;
 
     public void Start()
     {
+        worldManager = this;
+
         firstDoor.SetActive(true);
         foreach (GameObject arena in arenas)
             arena.GetComponent<Arena>().worldMananger = this;
